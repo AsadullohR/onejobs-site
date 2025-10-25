@@ -118,9 +118,11 @@ export default function OnejobsB2B() {
       <header className="sticky top-0 z-50 backdrop-blur supports-[backdrop-filter]:bg-white/5">
         <Container className="flex items-center justify-between py-4">
           <a href="#top" className="group flex items-center gap-2">
-            <div className="rounded-xl bg-white/10 p-2"><Rocket className="h-5 w-5"/></div>
+            {/* <div className="rounded-xl bg-white/10 p-2"> */}
+            <img src="/src/assets/logo.ico" className="h-10 w-10"/>
+            {/* </div> */}
             <span className="text-lg font-semibold">
-              <span className="text-indigo-400">One</span>jobs Consulting
+              <span className="text-indigo-400">Onejobs </span><br />Consulting
             </span>
           </a>
           <nav className="hidden items-center gap-6 md:flex">
@@ -168,7 +170,10 @@ export default function OnejobsB2B() {
             className="relative"
           >
             <div className="rounded-3xl border border-white/10 bg-white/5 p-3 shadow-xl backdrop-blur">
-              <div className="aspect-[4/3] rounded-2xl bg-gradient-to-br from-indigo-400/30 via-cyan-400/20 to-fuchsia-400/20"/>
+              <div className="aspect-[4/3] rounded-2xl grayscale bg-gradient-to-br from-indigo-400/30 via-cyan-400/20 to-fuchsia-400/20 bg-[url(/src/assets/office.jpg)] bg-blend-soft-light ">
+              {/* <img src="/src/assets/logo.ico" alt="" /> */}
+              {/* <img className="h-full w-full object-cover" src="/src/assets/office.jpg" alt="" /> */}
+              </div>
             </div>
             <div className="absolute -bottom-6 -left-6 hidden w-40 rounded-2xl border border-white/10 bg-white/5 p-4 text-xs text-white/80 md:block">
               <div className="mb-2 font-semibold text-white">Quick facts</div>
