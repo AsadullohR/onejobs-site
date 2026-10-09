@@ -2,9 +2,9 @@
 // Edit here once; every page reads from this file.
 export const SITE = {
   name: "OneJobs Consulting",
-  email: "info@onejobs.uz",
-  phone: "+998 71 200 00 01",
-  phoneHref: "tel:+998712000001",
-  address: "Tashkent, Shaykhontohur district, Beruniy St, 83A",
+  email: "jobs@trt.uz",
+  phone: "+998 (97) 676-33-77",
+  phoneHref: "tel:+998976763377",
+  address: "Andijan, Uzbekistan",
   hours: "Mon–Sat, 09:00–21:00",
 };

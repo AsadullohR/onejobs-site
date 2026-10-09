@@ -2,6 +2,7 @@ import { useEffect, useState } from "react";
 import { Link } from "react-router-dom";
 import { Reveal, SectionHead, NetlifyForm } from "../components/ui";
 import { SITE } from "../site";
+import Vacancies from "../components/Vacancies";
 
 const img = (id, w, h) => `https://images.unsplash.com/photo-${id}?w=${w}&h=${h}&fit=crop&auto=format`;
 
@@ -208,6 +209,11 @@ export default function Home() {
           ))}
         </div>
       </section>
+
+      <Vacancies
+        limit={3}
+        moreLink={<Link to="/jobseekers#vacancies" className="btn btn-outline btn-sm">All Vacancies →</Link>}
+      />
 
       <section id="process" className="section bg-navy on-dark">
         <SectionHead eyebrow="THE PROCESS" title="How Do We Work?" />

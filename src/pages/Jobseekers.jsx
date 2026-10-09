@@ -1,3 +1,5 @@
+import { useSearchParams } from "react-router-dom";
+import Vacancies from "../components/Vacancies";
 import { Reveal, SectionHead, HeroStats, FeatureGrid, Timeline, Faq, NetlifyForm, Field } from "../components/ui";
 
 const STATS = [
@@ -42,6 +44,9 @@ const FAQ = [
 ];
 
 export default function Jobseekers() {
+  const [params, setParams] = useSearchParams();
+  const vacancy = params.get("vacancy") || "";
+
   return (
     <div className="theme-blue">
       <section className="page-hero">
@@ -69,6 +74,8 @@ export default function Jobseekers() {
         <SectionHead eyebrow="WHY CHOOSE US" title="Everything You Need, All in One Place" />
         <FeatureGrid items={FEATURES} />
       </section>
+
+      <Vacancies id="vacancies" limit={9} title="Open Vacancies Right Now" />
 
       <section id="destinations" className="section bg-soft">
         <SectionHead eyebrow="OPEN DESTINATIONS" title="Where Could You Work?" />
@@ -106,6 +113,13 @@ export default function Jobseekers() {
             <p>Fill in your details and a consultant will contact you within 24 hours — free of charge.</p>
           </div>
           <NetlifyForm name="jobseeker-application" className="stack-form dark-fields" submitLabel="Submit Application — It's Free →">
+            {vacancy && (
+              <div className="applying-for">
+                <span>Applying for: <strong>{vacancy}</strong></span>
+                <button type="button" onClick={() => setParams({}, { replace: true })}>Clear</button>
+              </div>
+            )}
+            <input type="hidden" name="vacancy" value={vacancy} />
             <Field label="Full Name" name="name" placeholder="Your full name" required />
             <Field label="Phone / Email" name="contact" placeholder="+998 XX XXX XX XX" required />
             <Field label="Preferred Country" name="country" as="select" defaultValue="">
