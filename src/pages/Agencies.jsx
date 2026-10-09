@@ -1,4 +1,5 @@
-import { Reveal, SectionHead, HeroStats, FeatureGrid, Timeline, Faq, NetlifyForm, Field } from "../components/ui";
+import { Reveal, SectionHead, HeroStats, FeatureGrid, Timeline, Faq, NetlifyForm, Field, WhatsAppB2B } from "../components/ui";
+import { SITE } from "../site";
 
 const STATS = [
   { icon: "🌍", value: "12", label: "Partner Countries" },
@@ -78,6 +79,9 @@ export default function Agencies() {
               <a href="#partner" className="btn btn-accent">Become a Partner →</a>
               <a href="#models" className="btn btn-ghost">Partnership Models</a>
             </div>
+            <p className="hero-wa fade-up-4">
+              Prefer WhatsApp? <a href={SITE.whatsappB2BHref} target="_blank" rel="noopener noreferrer">{SITE.whatsappB2B}</a>
+            </p>
           </div>
           <HeroStats stats={STATS} />
         </div>
@@ -129,6 +133,10 @@ export default function Agencies() {
             <div className="eyebrow">APPLY NOW</div>
             <h2 className="h2">Start the Partnership Conversation</h2>
             <p>We respond to all agency enquiries within 2 business days.</p>
+            <div className="wa-row">
+              <span>Faster on WhatsApp:</span>
+              <WhatsAppB2B message="Hello OneJobs, I represent a recruitment agency and would like to discuss a partnership." />
+            </div>
           </div>
           <NetlifyForm name="agency-partnership" className="stack-form dark-fields" submitLabel="Submit Partnership Application →">
             <Field label="Agency Name" name="agency" placeholder="Your company name" required />

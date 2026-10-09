@@ -140,6 +140,13 @@ button, input, select, textarea { font: inherit; color: inherit; }
 .btn-ghost { border: 2px solid rgba(255, 255, 255, 0.3); color: #fff; padding: 12px 28px; font-weight: 600; }
 .btn-ghost:hover { border-color: #fff; background: rgba(255, 255, 255, 0.08); }
 .btn-block { width: 100%; padding: 14px; font-size: 0.95rem; }
+.btn-whatsapp { background: #25d366; color: #fff; padding: 12px 22px; font-size: 0.88rem; }
+.btn-whatsapp:hover { background: #1ebe5b; }
+.wa-row { display: flex; align-items: center; justify-content: center; gap: 0.75rem; flex-wrap: wrap; margin-top: 1.25rem; font-size: 0.85rem; color: var(--muted); }
+.on-dark .wa-row, .apply-section .wa-row { color: rgba(255, 255, 255, 0.55); }
+.hero-wa { margin-top: 1.25rem; font-size: 0.85rem; color: rgba(255, 255, 255, 0.6); }
+.hero-wa a { color: #4ade80; font-weight: 600; }
+.hero-wa a:hover { text-decoration: underline; }
 
 /* ---------- Nav ---------- */
 .nav {

@@ -1,4 +1,5 @@
-import { Reveal, SectionHead, HeroStats, FeatureGrid, NetlifyForm, Field } from "../components/ui";
+import { Reveal, SectionHead, HeroStats, FeatureGrid, NetlifyForm, Field, WhatsAppB2B } from "../components/ui";
+import { SITE } from "../site";
 
 const STATS = [
   { icon: "⚡", value: "5–10", label: "Days to Shortlist" },
@@ -61,6 +62,9 @@ export default function Employers() {
               <a href="#hire" className="btn btn-accent">Post a Vacancy →</a>
               <a href="#process" className="btn btn-ghost">How It Works</a>
             </div>
+            <p className="hero-wa fade-up-4">
+              Prefer WhatsApp? <a href={SITE.whatsappB2BHref} target="_blank" rel="noopener noreferrer">{SITE.whatsappB2B}</a>
+            </p>
           </div>
           <HeroStats stats={STATS} />
         </div>
@@ -120,6 +124,10 @@ export default function Employers() {
             <div className="eyebrow">POST A VACANCY</div>
             <h2 className="h2">Tell Us What You Need</h2>
             <p>We'll respond with a proposal and timeline within 48 hours.</p>
+            <div className="wa-row">
+              <span>Faster on WhatsApp:</span>
+              <WhatsAppB2B message="Hello OneJobs, I'm an employer and would like to discuss a vacancy." />
+            </div>
           </div>
           <NetlifyForm
             name="job-order"
