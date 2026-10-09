@@ -2,7 +2,7 @@ import { json } from "../../lib/response.mjs";
 
 // YouTube's public RSS feed lists the newest 15 videos of a playlist or channel; no API key needed.
 // Prefer a playlist so only testimonial videos appear.
-const PLAYLIST = process.env.YOUTUBE_PLAYLIST_ID || "";
+const PLAYLIST = process.env.YOUTUBE_PLAYLIST_ID || (process.env.YOUTUBE_CHANNEL_ID ? "" : "PLS7Wa5BXaxCQ"); // "Natijalar" playlist
 const CHANNEL_ID = process.env.YOUTUBE_CHANNEL_ID || "";
 
 const decode = (s) =>

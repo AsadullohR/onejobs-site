@@ -7,7 +7,7 @@
 //   Mas'uliyatli bo'lish
 //   ...
 //   🧾 Siz ham o'z joyingizni ...          <- footer (contacts, handles), dropped
-import { parseChannelPosts } from "../../lib/telegram.mjs";
+import { parseChannelPosts, clean, stripFooter } from "../../lib/telegram.mjs";
 
 // Label words (EN / UZ Latin / UZ Cyrillic / RU) mapped to the field they describe.
 const FIELDS = {
@@ -33,8 +33,6 @@ function fieldFor(label) {
   return LABELS.find(([w]) => l === w || l.startsWith(w + " ") || l.endsWith(" " + w))?.[1] ?? null;
 }
 
-const clean = (line) => line.replace(/^[^\p{L}\p{N}+€$£₩¥]+/u, "").replace(/[\s\p{Extended_Pictographic}\u{1F1E6}-\u{1F1FF}️]+$/u, "").trim();
-
 // "🇩🇪" -> "Germany"
 const regionNames = new Intl.DisplayNames(["en"], { type: "region" });
 function countryFromFlag(line) {
@@ -51,17 +49,11 @@ function countryFromFlag(line) {
 // "BOLGARIYADA ISH IMKONIYATI!" -> "Bolgariyada ish imkoniyati!"
 const sentenceCase = (s) => (/\p{Ll}/u.test(s) ? s : s.charAt(0) + s.slice(1).toLowerCase());
 
-// The footer starts at the booking call-to-action or the first phone number.
-const FOOTER_RE = /band qil|biz orqali|o['‘’]z joyingizni|^\W*\+?\d[\d\s()-]{8,}\d\W*$|^\W*@\w+/iu;
-const NOISE_RE = /^(#[\p{L}\p{N}_]+\s*)+$|^(https?:\/\/|t\.me\/|www\.)\S+$|telegram\s*\|\s*instagram/iu;
-
 const LABEL_VALUE = /^([\p{L}][\p{L}\p{N}\s'’‘.]{0,40}?)\s*[:：]\s*(.+)$/u;
 const HEADING = /^([\p{L}][\p{L}\p{N}\s'’‘.]{0,40}?)\s*[:：]\s*$/u;
 
 export function parsePostText(text) {
-  const raw = text.split("\n").map((l) => l.trim());
-  const footer = raw.findIndex((l, i) => i > 0 && FOOTER_RE.test(clean(l) || l));
-  const lines = (footer > 0 ? raw.slice(0, footer) : raw).filter((l) => !NOISE_RE.test(l));
+  const lines = stripFooter(text);
 
   const firstIdx = lines.findIndex(Boolean);
   const headline = firstIdx >= 0 ? sentenceCase(clean(lines[firstIdx])) : "";

@@ -22,7 +22,9 @@ Local dev: `npm run dev` (the function runs inside Vite).
 
 ## Success stories: visa photos and videos
 
-Home and Jobseekers show a "Real Visas. Real People." section. Each half appears once its source is set:
+Home and Jobseekers show a "Real Visas. Real People." section. Defaults: visa photos from
+[@onejobs_natija](https://t.me/onejobs_natija), videos from the [Natijalar playlist](https://www.youtube.com/playlist?list=PLS7Wa5BXaxCQ).
+Override with:
 
 | Variable | What it does |
 |---|---|

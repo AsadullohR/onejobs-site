@@ -97,7 +97,7 @@ export function VideoTestimonials({ limit = 3 }) {
           <a href={url} target="_blank" rel="noopener noreferrer" className="btn btn-outline btn-sm">More on YouTube ↗</a>
         )}
       </Reveal>
-      <div className="grid-3">
+      <div className={loading || items.length >= 3 ? "grid-3" : `video-grid-${items.length}`}>
         {loading
           ? Array.from({ length: 3 }, (_, i) => <div className="video-card skeleton" key={i} />)
           : items.slice(0, limit).map((v, i) => <VideoCard v={v} delay={i * 80} key={v.id} />)}

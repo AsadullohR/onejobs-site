@@ -23,8 +23,28 @@ export function htmlToText(html) {
     .trim();
 }
 
-export async function fetchChannelHtml(channel) {
-  const res = await fetch(`https://t.me/s/${channel}`, {
+// Strips leading emoji/bullets and trailing emoji from a line.
+export const clean = (line) =>
+  line
+    .replace(/^[^\p{L}\p{N}+€$£₩¥]+/u, "")
+    .replace(/[\s\p{Extended_Pictographic}\u{1F1E6}-\u{1F1FF}️]+$/u, "")
+    .trim();
+
+// Every OneJobs post ends with the same contact footer: a call-to-action, phone, @handles.
+const FOOTER_RE = /band qil|biz orqali|ro['‘’]yxatdan o['‘’]tish|o['‘’]z joyingizni|^\W*\+?\d[\d\s()-]{8,}\d\W*$|^\W*@\w+/iu;
+const NOISE_RE = /^(#[\p{L}\p{N}_]+\s*)+$|^(https?:\/\/|t\.me\/|www\.)\S+$|telegram\s*\|\s*instagram/iu;
+
+// Post text as trimmed lines (blank lines kept) without the contact footer, links, or hashtag lines.
+// A post that is only the footer returns [].
+export function stripFooter(text) {
+  const raw = text.split("\n").map((l) => l.trim());
+  const footer = raw.findIndex((l) => FOOTER_RE.test(clean(l) || l));
+  return (footer >= 0 ? raw.slice(0, footer) : raw).filter((l) => !NOISE_RE.test(l));
+}
+
+// `before` pages back through older posts (t.me/s shows about 20 per page).
+export async function fetchChannelHtml(channel, before) {
+  const res = await fetch(`https://t.me/s/${channel}${before ? `?before=${before}` : ""}`, {
     headers: { "User-Agent": "Mozilla/5.0 (compatible; OneJobsSite/1.0)", "Accept-Language": "en" },
   });
   if (!res.ok) throw new Error(`Telegram responded ${res.status}`);
