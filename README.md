@@ -6,7 +6,7 @@ The Home and Jobseekers pages show the latest posts from the company's public Te
 `netlify/functions/vacancies` reads `https://t.me/s/<channel>` and turns each post into a vacancy card.
 Netlify caches the result for 10 minutes.
 
-Setup in Netlify → Site configuration → Environment variables:
+Works with no setup. Optional overrides in Netlify → Site configuration → Environment variables:
 
 | Variable | Required | Example |
 |---|---|---|
@@ -24,4 +24,4 @@ Schedule: 5/2, 8 hours
 Housing: provided
 ```
 
-Local dev: `TELEGRAM_CHANNEL=<name> npm run dev`.
+Local dev: `npm run dev` (the function runs inside Vite).

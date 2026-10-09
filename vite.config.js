@@ -4,7 +4,7 @@ import { resolve } from 'node:path'
 import { pathToFileURL } from 'node:url'
 
 // Serves the Netlify function at the same URL during `npm run dev` / `vite preview`,
-// so the Telegram vacancies feed works locally. Set TELEGRAM_CHANNEL before starting.
+// so the Telegram vacancies feed works locally.
 const netlifyFunctionsLocal = () => {
   const attach = (server, load) =>
     server.middlewares.use('/.netlify/functions/vacancies', async (req, res) => {

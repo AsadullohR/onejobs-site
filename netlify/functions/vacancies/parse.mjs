@@ -25,20 +25,22 @@ function htmlToText(html) {
 
 // Label words (EN / UZ / RU) mapped to the field they describe.
 const FIELDS = {
-  position: ["position", "job", "vacancy", "role", "lavozim", "kasb", "vakansiya", "ish", "должность", "вакансия", "профессия", "позиция"],
-  country: ["country", "location", "davlat", "mamlakat", "joylashuv", "shahar", "страна", "город", "локация", "место"],
-  salary: ["salary", "pay", "wage", "maosh", "oylik", "ish haqi", "зарплата", "зп", "оклад", "заработная плата"],
-  schedule: ["schedule", "hours", "ish vaqti", "grafik", "график", "режим"],
-  requirements: ["requirements", "talablar", "требования"],
+  position: ["position", "job", "vacancy", "role", "lavozim", "kasb", "vakansiya", "ish", "должность", "вакансия", "профессия", "позиция", "лавозим", "касб", "вакансия"],
+  country: ["country", "location", "davlat", "mamlakat", "joylashuv", "shahar", "страна", "город", "локация", "место", "давлат", "мамлакат", "шаҳар", "шахар"],
+  salary: ["salary", "pay", "wage", "maosh", "oylik", "ish haqi", "зарплата", "зп", "оклад", "заработная плата", "маош", "ойлик", "иш ҳақи", "иш хаки"],
+  schedule: ["schedule", "hours", "ish vaqti", "grafik", "график", "режим", "иш вақти", "иш вакти"],
+  requirements: ["requirements", "talablar", "требования", "талаблар"],
   contact: ["contact", "aloqa", "murojaat", "telefon", "контакт", "контакты", "телефон", "связь"],
 };
 
+// Longest labels first, so "ish vaqti" (schedule) wins over "ish" (job).
+const LABELS = Object.entries(FIELDS)
+  .flatMap(([field, words]) => words.map((w) => [w, field]))
+  .sort((a, b) => b[0].length - a[0].length);
+
 function fieldFor(label) {
   const l = label.toLowerCase().trim();
-  for (const [field, words] of Object.entries(FIELDS)) {
-    if (words.some((w) => l === w || l.startsWith(w + " ") || l.endsWith(" " + w))) return field;
-  }
-  return null;
+  return LABELS.find(([w]) => l === w || l.startsWith(w + " ") || l.endsWith(" " + w))?.[1] ?? null;
 }
 
 // "🇩🇪 Country: Germany" -> { label: "Country", value: "Germany" }
@@ -85,6 +87,7 @@ export function parseChannelHtml(html, channel) {
   for (const block of blocks) {
     const id = block.match(/data-post="[^"/]+\/(\d+)"/)?.[1];
     if (!id) continue;
+    if (/class="tgme_widget_message [^"]*service_message/.test(block)) continue; // "Channel created", pinned notices
 
     // Text block ends at its closing </div>; Telegram does not nest divs inside it.
     const textHtml = block.match(/<div class="tgme_widget_message_text[^"]*"[^>]*>([\s\S]*?)<\/div>/)?.[1];

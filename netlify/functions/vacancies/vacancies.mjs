@@ -1,8 +1,7 @@
 import { parseChannelHtml } from "./parse.mjs";
 
-// Set TELEGRAM_CHANNEL in Netlify (Site configuration > Environment variables)
-// to the public channel username, without the @.
-const CHANNEL = (process.env.TELEGRAM_CHANNEL || "").replace(/^@/, "");
+// Public channel username (without @). Override with TELEGRAM_CHANNEL in Netlify env vars.
+const CHANNEL = (process.env.TELEGRAM_CHANNEL || "onejobs_vakansiyalar").replace(/^@/, "");
 const KEYWORD = (process.env.TELEGRAM_VACANCY_TAG || "").toLowerCase(); // optional: only posts containing this, e.g. "#vakansiya"
 
 const json = (body, status, maxAge) =>
