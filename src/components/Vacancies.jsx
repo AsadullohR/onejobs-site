@@ -1,39 +1,21 @@
-import { useEffect, useState } from "react";
 import { Link } from "react-router-dom";
 import { Reveal } from "./ui";
-
-const ENDPOINT = "/.netlify/functions/vacancies";
-
-// One request per page load, shared by every Vacancies block on the page.
-let cache = null;
-function loadVacancies() {
-  if (!cache) {
-    cache = fetch(ENDPOINT)
-      .then((r) => r.json())
-      .catch(() => ({ vacancies: [], error: "network" }));
-  }
-  return cache;
-}
-
-function useVacancies() {
-  const [state, setState] = useState({ loading: true, vacancies: [], url: null, error: null });
-  useEffect(() => {
-    let alive = true;
-    loadVacancies().then((d) => {
-      if (alive) setState({ loading: false, vacancies: d.vacancies || [], url: d.url || null, error: d.error || null });
-    });
-    return () => {
-      alive = false;
-    };
-  }, []);
-  return state;
-}
+import { useFeed } from "./useFeed";
 
 const fmtDate = (iso) =>
   iso ? new Date(iso).toLocaleDateString("en-GB", { day: "numeric", month: "short" }) : "";
 
 function VacancyCard({ v, delay }) {
-  const applyTo = `/jobseekers?vacancy=${encodeURIComponent(v.title)}#apply`;
+  const label = v.country ? `${v.title} (${v.country})` : v.title;
+  const applyTo = `/jobseekers?vacancy=${encodeURIComponent(label)}#apply`;
+  const facts = [
+    v.location && ["Location", v.location],
+    v.start && ["Start", v.start],
+    v.openings && ["Openings", v.openings],
+    v.schedule && ["Schedule", v.schedule],
+    ...v.details.slice(0, 2).map((d) => [d.label, d.value]),
+  ].filter(Boolean).slice(0, 3);
+
   return (
     <Reveal className="vacancy-card" delay={delay}>
       {v.photo && <img className="vacancy-photo" src={v.photo} alt="" loading="lazy" />}
@@ -42,19 +24,30 @@ function VacancyCard({ v, delay }) {
           {v.country && <span className="vacancy-country">{v.country}</span>}
           {v.date && <span className="vacancy-date">{fmtDate(v.date)}</span>}
         </div>
+        {v.headline && <div className="vacancy-headline">{v.headline}</div>}
         <h3>{v.title}</h3>
         {v.salary && <div className="vacancy-salary">{v.salary}</div>}
-        <ul className="vacancy-details">
-          {v.schedule && <li><strong>Schedule:</strong> {v.schedule}</li>}
-          {v.requirements && <li><strong>Requirements:</strong> {v.requirements}</li>}
-          {v.details.slice(0, 3).map((d) => (
-            <li key={d.label}><strong>{d.label}:</strong> {d.value}</li>
-          ))}
-        </ul>
-        {!v.country && !v.salary && v.summary && <p className="vacancy-summary">{v.summary}</p>}
+        {facts.length > 0 && (
+          <ul className="vacancy-details">
+            {facts.map(([k, val]) => (
+              <li key={k}><strong>{k}:</strong> {val}</li>
+            ))}
+          </ul>
+        )}
+        {v.perks.length > 0 && (
+          <ul className="vacancy-perks">
+            {v.perks.slice(0, 3).map((p) => (
+              <li key={p}><span aria-hidden>✓</span>{p}</li>
+            ))}
+          </ul>
+        )}
+        {v.requirements.length > 0 && (
+          <div className="vacancy-req"><strong>Requirements:</strong> {v.requirements.slice(0, 3).join(" · ")}</div>
+        )}
+        {!v.salary && !v.perks.length && !v.requirements.length && v.summary && <p className="vacancy-summary">{v.summary}</p>}
         <div className="vacancy-actions">
           <Link to={applyTo} className="btn btn-primary btn-xs">Apply →</Link>
-          <a href={v.url} target="_blank" rel="noopener noreferrer" className="vacancy-tg">View in Telegram ↗</a>
+          <a href={v.url} target="_blank" rel="noopener noreferrer" className="vacancy-tg">Full details ↗</a>
         </div>
       </div>
     </Reveal>
@@ -64,7 +57,7 @@ function VacancyCard({ v, delay }) {
 // Latest vacancies pulled from the company's Telegram channel.
 // Renders nothing if the feed is not configured, so the page still looks complete.
 export default function Vacancies({ limit = 6, eyebrow = "LATEST VACANCIES", title = "Fresh Job Openings", moreLink, id }) {
-  const { loading, vacancies, url, error } = useVacancies();
+  const { loading, items: vacancies, url, error } = useFeed("vacancies", "vacancies");
 
   if (!loading && !vacancies.length && !url) return null;
 

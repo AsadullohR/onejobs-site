@@ -1,5 +1,6 @@
 import { useSearchParams } from "react-router-dom";
 import Vacancies from "../components/Vacancies";
+import SuccessStories from "../components/SuccessStories";
 import { Reveal, SectionHead, HeroStats, FeatureGrid, Timeline, Faq, NetlifyForm, Field } from "../components/ui";
 
 const STATS = [
@@ -99,6 +100,8 @@ export default function Jobseekers() {
         <SectionHead eyebrow="THE PROCESS" title="Your Journey, Step by Step" />
         <Timeline steps={STEPS} />
       </section>
+
+      <SuccessStories visaLimit={12} className="bg-soft" />
 
       <section id="faq" className="section bg-white">
         <SectionHead eyebrow="FAQ" title="Common Questions" />

@@ -3,6 +3,7 @@ import { Link } from "react-router-dom";
 import { Reveal, SectionHead, NetlifyForm } from "../components/ui";
 import { SITE } from "../site";
 import Vacancies from "../components/Vacancies";
+import SuccessStories from "../components/SuccessStories";
 
 const img = (id, w, h) => `https://images.unsplash.com/photo-${id}?w=${w}&h=${h}&fit=crop&auto=format`;
 
@@ -25,6 +26,7 @@ const SERVICES = [
   { icon: "📋", title: "Job Placement", text: "We help you find employment at international companies across partner countries." },
   { icon: "🪪", title: "Work Permit Support", text: "Complete support with work permits and employment documentation." },
   { icon: "📄", title: "Visa Services", text: "Document preparation and submission for international work visas." },
+  { icon: "🏛️", title: "Embassy Appointments", text: "We book your embassy visa appointment and prepare you for the interview." },
   { icon: "✈️", title: "Travel Arrangement", text: "Flight booking, accommodation, and full pre-departure preparation." },
   { icon: "💬", title: "24/7 Support", text: "Fast, professional answers to all your questions at any hour." },
 ];
@@ -231,6 +233,8 @@ export default function Home() {
       </section>
 
       <Testimonials />
+
+      <SuccessStories />
 
       <section id="contact" className="cta">
         <div className="cta-plane" aria-hidden>✈</div>

@@ -99,6 +99,7 @@ function Footer() {
             <li><Link to="/#services">Job Placement</Link></li>
             <li><Link to="/#services">Work Permit Support</Link></li>
             <li><Link to="/#services">Visa Services</Link></li>
+            <li><Link to="/#services">Embassy Appointments</Link></li>
             <li><Link to="/#services">Travel Arrangement</Link></li>
           </ul>
         </div>

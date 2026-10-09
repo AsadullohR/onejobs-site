@@ -3,8 +3,8 @@
 export const SITE = {
   name: "OneJobs Consulting",
   email: "jobs@trt.uz",
-  phone: "+998 (97) 676-33-77",
-  phoneHref: "tel:+998976763377",
+  phone: "+998 (74) 676 33 77",
+  phoneHref: "tel:+998746763377",
   address: "Andijan, Uzbekistan",
   hours: "Mon–Sat, 09:00–21:00",
 };

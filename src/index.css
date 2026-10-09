@@ -270,7 +270,7 @@ main { padding-top: var(--nav-h); }
 .stat-sub { font-size: 0.72rem; color: rgba(255, 255, 255, 0.4); margin-top: 1px; }
 
 /* ---------- Services ---------- */
-.services-grid { display: grid; grid-template-columns: repeat(5, 1fr); gap: 1.25rem; }
+.services-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 1.25rem; }
 .service-card {
   background: var(--card);
   border: 1.5px solid var(--line);
@@ -556,7 +556,7 @@ textarea.input { resize: vertical; }
 /* ---------- Telegram vacancies ---------- */
 .vacancy-card { background: var(--card); border: 1.5px solid var(--line); border-radius: 14px; overflow: hidden; display: flex; flex-direction: column; transition: opacity 0.55s, transform 0.55s, border-color 0.25s, box-shadow 0.25s; }
 .vacancy-card:hover { border-color: var(--blue); box-shadow: 0 10px 28px rgba(13, 27, 62, 0.08); }
-.vacancy-photo { width: 100%; aspect-ratio: 16 / 9; object-fit: cover; }
+.vacancy-photo { width: 100%; aspect-ratio: 1 / 1; object-fit: cover; object-position: top; border-bottom: 1.5px solid var(--line); }
 .vacancy-body { padding: 1.5rem; display: flex; flex-direction: column; gap: 0.6rem; flex: 1; }
 .vacancy-meta { display: flex; justify-content: space-between; align-items: center; gap: 0.5rem; }
 .vacancy-country { font-size: 0.68rem; font-weight: 700; letter-spacing: 0.08em; text-transform: uppercase; color: var(--blue); background: var(--blue-tint); border-radius: 100px; padding: 4px 10px; }
@@ -566,6 +566,12 @@ textarea.input { resize: vertical; }
 .vacancy-details { display: flex; flex-direction: column; gap: 4px; }
 .vacancy-details li, .vacancy-summary { font-size: 0.82rem; color: var(--muted); line-height: 1.6; }
 .vacancy-details strong { color: var(--navy); }
+.vacancy-headline { font-size: 0.78rem; font-weight: 600; color: var(--muted); }
+.vacancy-perks { display: flex; flex-direction: column; gap: 4px; }
+.vacancy-perks li { font-size: 0.8rem; color: var(--ink-2); display: flex; gap: 6px; }
+.vacancy-perks li span { color: var(--green); font-weight: 700; }
+.vacancy-req { font-size: 0.78rem; color: var(--muted); line-height: 1.55; display: -webkit-box; -webkit-line-clamp: 3; -webkit-box-orient: vertical; overflow: hidden; }
+.vacancy-req strong { color: var(--navy); }
 .vacancy-summary { white-space: pre-line; display: -webkit-box; -webkit-line-clamp: 4; -webkit-box-orient: vertical; overflow: hidden; }
 .vacancy-actions { margin-top: auto; padding-top: 0.75rem; display: flex; align-items: center; justify-content: space-between; gap: 0.75rem; flex-wrap: wrap; }
 .btn-xs { padding: 8px 16px; font-size: 0.8rem; box-shadow: none; }
@@ -579,6 +585,32 @@ textarea.input { resize: vertical; }
 .applying-for strong { color: #fff; }
 .applying-for button { background: none; border: none; color: var(--blue-pale); cursor: pointer; font-size: 0.8rem; }
 
+/* ---------- Success stories (visas + videos) ---------- */
+.h3 { font-size: clamp(1.2rem, 2vw, 1.5rem); font-weight: 800; color: var(--navy); }
+.stories-block + .stories-block { margin-top: 4rem; }
+.stories-block .row-head { margin-bottom: 1.75rem; }
+.visa-grid { display: grid; grid-template-columns: repeat(4, 1fr); gap: 1rem; }
+.visa-tile { position: relative; aspect-ratio: 3 / 4; border-radius: 12px; overflow: hidden; border: 1.5px solid var(--line); background: #fff; cursor: zoom-in; padding: 0; }
+.visa-tile img { width: 100%; height: 100%; object-fit: cover; transition: transform 0.4s ease; }
+.visa-tile:hover img { transform: scale(1.04); }
+.visa-caption { position: absolute; inset: auto 0 0 0; padding: 1.5rem 0.75rem 0.6rem; background: linear-gradient(to top, rgba(13, 27, 62, 0.85), transparent); color: #fff; font-size: 0.78rem; font-weight: 600; text-align: left; display: -webkit-box; -webkit-line-clamp: 2; -webkit-box-orient: vertical; overflow: hidden; }
+.visa-tile.skeleton, .video-card.skeleton { background: linear-gradient(90deg, var(--card), #eef2fb, var(--card)); background-size: 200% 100%; animation: shimmer 1.4s infinite linear; }
+.video-card.skeleton { aspect-ratio: 16 / 11; border-radius: 14px; }
+.video-card { display: flex; flex-direction: column; gap: 0.75rem; }
+.video-frame { position: relative; aspect-ratio: 16 / 9; border-radius: 14px; overflow: hidden; background: var(--navy); box-shadow: 0 8px 24px rgba(13, 27, 62, 0.12); }
+.video-frame iframe, .video-poster, .video-poster img { position: absolute; inset: 0; width: 100%; height: 100%; border: 0; }
+.video-poster { padding: 0; cursor: pointer; background: none; }
+.video-poster img { object-fit: cover; }
+.video-play { position: absolute; top: 50%; left: 50%; transform: translate(-50%, -50%); width: 64px; height: 64px; border-radius: 50%; background: var(--blue); color: #fff; display: grid; place-items: center; font-size: 1.3rem; padding-left: 4px; box-shadow: 0 0 0 10px rgba(21, 101, 224, 0.25); transition: transform 0.2s; }
+.video-poster:hover .video-play { transform: translate(-50%, -50%) scale(1.08); }
+.video-title { font-weight: 700; font-size: 0.92rem; line-height: 1.4; }
+.lightbox { position: fixed; inset: 0; z-index: 200; background: rgba(7, 18, 40, 0.92); display: grid; place-items: center; padding: 1.5rem; cursor: zoom-out; }
+.lightbox figure { max-width: min(900px, 100%); max-height: 100%; cursor: default; text-align: center; }
+.lightbox img { max-height: 82vh; width: auto; margin: 0 auto; border-radius: 10px; }
+.lightbox figcaption { color: #fff; margin-top: 0.75rem; font-weight: 600; }
+.lightbox-close { position: absolute; top: 1rem; right: 1.25rem; background: none; border: none; color: #fff; font-size: 2.2rem; line-height: 1; cursor: pointer; }
+@media (max-width: 900px) { .visa-grid { grid-template-columns: repeat(2, 1fr); } }
+
 /* ---------- Simple pages (thank you / 404) ---------- */
 .simple-page { min-height: calc(100vh - var(--nav-h)); display: grid; place-items: center; text-align: center; padding: 4rem var(--gutter); background: linear-gradient(135deg, var(--navy), var(--navy-2)); color: #fff; }
 .simple-page .big { font-size: 3rem; margin-bottom: 1rem; }
@@ -587,7 +619,6 @@ textarea.input { resize: vertical; }
 
 /* ---------- Responsive ---------- */
 @media (max-width: 1100px) {
-  .services-grid { grid-template-columns: repeat(3, 1fr); }
   .countries-grid { grid-template-columns: repeat(2, 1fr); }
 }
 

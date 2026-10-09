@@ -13,15 +13,21 @@ Works with no setup. Optional overrides in Netlify → Site configuration → En
 | `TELEGRAM_CHANNEL` | yes | `onejobs_vakansiya` (no `@`) |
 | `TELEGRAM_VACANCY_TAG` | no | `#vakansiya`: only posts containing this text are shown |
 
-Post format that fills the cards best (one field per line, English, Uzbek, or Russian labels):
-
-```
-Welder needed in Germany
-Country: Germany
-Position: Welder
-Salary: €2,800 – €3,500
-Schedule: 5/2, 8 hours
-Housing: provided
-```
+The parser is built around the channel's post template: flag + headline on the first line
+(country comes from the flag), `Vakansiya:` / `Maosh:` lines, and `Talablar:` / `... tomonidan:`
+headings with items on the following lines. The contact footer (phone, @handles) is dropped.
+Labels work in Uzbek (Latin and Cyrillic), Russian, and English.
 
 Local dev: `npm run dev` (the function runs inside Vite).
+
+## Success stories: visa photos and videos
+
+Home and Jobseekers show a "Real Visas. Real People." section. Each half appears once its source is set:
+
+| Variable | What it does |
+|---|---|
+| `TELEGRAM_VISA_CHANNEL` | Public Telegram channel with approved-visa photos (no `@`). Each photo becomes a gallery tile; the post's first line is its caption. |
+| `YOUTUBE_PLAYLIST_ID` | Playlist of client video testimonials (the `list=` part of the playlist URL). Preferred. |
+| `YOUTUBE_CHANNEL_ID` | Alternative: all videos from a channel (`UC...` ID). |
+
+YouTube's public feed is used, so no API key is needed. Videos load only when a visitor presses play.

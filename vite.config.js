@@ -3,25 +3,27 @@ import react from '@vitejs/plugin-react'
 import { resolve } from 'node:path'
 import { pathToFileURL } from 'node:url'
 
-// Serves the Netlify function at the same URL during `npm run dev` / `vite preview`,
-// so the Telegram vacancies feed works locally.
+// Serves the Netlify functions at the same URLs during `npm run dev` / `vite preview`,
+// so the Telegram and YouTube feeds work locally.
 const netlifyFunctionsLocal = () => {
+  const names = ['vacancies', 'visas', 'videos']
   const attach = (server, load) =>
-    server.middlewares.use('/.netlify/functions/vacancies', async (req, res) => {
-      const mod = await load()
+    server.middlewares.use('/.netlify/functions', async (req, res, next) => {
+      const name = req.url.split(/[/?]/)[1]
+      if (!names.includes(name)) return next()
+      const mod = await load(`./netlify/functions/${name}/${name}.mjs`)
       const response = await mod.default(new Request('http://localhost' + req.url))
       res.statusCode = response.status
       res.setHeader('Content-Type', response.headers.get('Content-Type'))
       res.end(await response.text())
     })
-  const path = './netlify/functions/vacancies/vacancies.mjs'
   return {
     name: 'netlify-functions-local',
     configureServer(server) {
-      attach(server, () => server.ssrLoadModule(path))
+      attach(server, (path) => server.ssrLoadModule(path))
     },
     configurePreviewServer(server) {
-      attach(server, () => import(pathToFileURL(resolve(path)).href))
+      attach(server, (path) => import(pathToFileURL(resolve(path)).href))
     },
   }
 }
