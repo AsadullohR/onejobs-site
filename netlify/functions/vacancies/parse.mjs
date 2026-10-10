@@ -1,36 +1,26 @@
-// Parses the public web preview of a Telegram channel (https://t.me/s/<channel>)
-// into vacancy objects. No bot or API key needed; works for public channels only.
+// Turns Telegram channel posts into vacancy objects.
+//
+// Built around the OneJobs post template:
+//   🇧🇬 BOLGARIYADA ISH IMKONIYATI!        <- headline; the flag gives the country
+//   🐑 Vakansiya: Ferma ishchisi           <- "label: value" lines
+//   📌 Talablar:                           <- "label:" heading, items on the following lines
+//   Mas'uliyatli bo'lish
+//   ...
+//   🧾 Siz ham o'z joyingizni ...          <- footer (contacts, handles), dropped
+import { parseChannelPosts, clean, stripFooter } from "../../lib/telegram.mjs";
 
-const ENTITIES = { amp: "&", lt: "<", gt: ">", quot: '"', "#39": "'", apos: "'", nbsp: " " };
-
-function decode(s) {
-  return s
-    .replace(/&#(\d+);/g, (_, n) => String.fromCodePoint(Number(n)))
-    .replace(/&#x([0-9a-f]+);/gi, (_, n) => String.fromCodePoint(parseInt(n, 16)))
-    .replace(/&([a-z#0-9]+);/gi, (m, e) => ENTITIES[e.toLowerCase()] ?? m);
-}
-
-function htmlToText(html) {
-  return decode(
-    html
-      .replace(/<br\s*\/?>/gi, "\n")
-      .replace(/<\/(p|div)>/gi, "\n")
-      .replace(/<[^>]+>/g, "")
-  )
-    .replace(/ /g, " ")
-    .replace(/[ \t]+\n/g, "\n")
-    .replace(/\n{3,}/g, "\n\n")
-    .trim();
-}
-
-// Label words (EN / UZ / RU) mapped to the field they describe.
+// Label words (EN / UZ Latin / UZ Cyrillic / RU) mapped to the field they describe.
 const FIELDS = {
-  position: ["position", "job", "vacancy", "role", "lavozim", "kasb", "vakansiya", "ish", "должность", "вакансия", "профессия", "позиция", "лавозим", "касб", "вакансия"],
-  country: ["country", "location", "davlat", "mamlakat", "joylashuv", "shahar", "страна", "город", "локация", "место", "давлат", "мамлакат", "шаҳар", "шахар"],
-  salary: ["salary", "pay", "wage", "maosh", "oylik", "ish haqi", "зарплата", "зп", "оклад", "заработная плата", "маош", "ойлик", "иш ҳақи", "иш хаки"],
-  schedule: ["schedule", "hours", "ish vaqti", "grafik", "график", "режим", "иш вақти", "иш вакти"],
+  position: ["position", "job", "vacancy", "vacancies", "role", "lavozim", "kasb", "vakansiya", "vakansiyalar", "bo'sh ish o'rinlari", "ish o'rinlari", "ish", "должность", "вакансия", "вакансии", "профессия", "позиция", "лавозим", "касб"],
+  country: ["country", "davlat", "mamlakat", "страна", "давлат", "мамлакат"],
+  location: ["location", "ish joyi", "joy", "joylashuv", "manzil", "shahar", "город", "локация", "место работы", "шаҳар", "шахар"],
+  salary: ["salary", "pay", "wage", "maosh", "ish haqi", "зарплата", "зп", "оклад", "заработная плата", "маош", "иш ҳақи", "иш хаки"],
+  schedule: ["schedule", "hours", "ish vaqti", "ish grafigi", "grafik", "график", "режим", "иш вақти", "иш вакти"],
+  start: ["start", "ish boshlanishi", "ish boshlash", "boshlanish", "jo'nab ketish", "начало"],
+  openings: ["openings", "talab qilinadi", "kerak", "jami ish o'rni", "ish o'rni", "нужно", "требуется"],
   requirements: ["requirements", "talablar", "требования", "талаблар"],
-  contact: ["contact", "aloqa", "murojaat", "telefon", "контакт", "контакты", "телефон", "связь"],
+  perks: ["benefits", "we offer", "tomonidan", "biz taklif qilamiz", "sharoitlar", "qulayliklar", "условия", "мы предлагаем"],
+  duties: ["duties", "responsibilities", "ish vazifalari", "vazifalar", "обязанности"],
 };
 
 // Longest labels first, so "ish vaqti" (schedule) wins over "ish" (job).
@@ -39,74 +29,91 @@ const LABELS = Object.entries(FIELDS)
   .sort((a, b) => b[0].length - a[0].length);
 
 function fieldFor(label) {
-  const l = label.toLowerCase().trim();
+  const l = label.toLowerCase().replace(/[‘’`ʻʼ]/g, "'").trim();
   return LABELS.find(([w]) => l === w || l.startsWith(w + " ") || l.endsWith(" " + w))?.[1] ?? null;
 }
 
-// "🇩🇪 Country: Germany" -> { label: "Country", value: "Germany" }
-const LINE_RE = /^[^\p{L}\p{N}]*([\p{L}][\p{L}\s'’.]{0,30}?)\s*[:：]\s*(.+)$/u;
+// "🇩🇪" -> "Germany"
+const regionNames = new Intl.DisplayNames(["en"], { type: "region" });
+function countryFromFlag(line) {
+  const flag = line.match(/[\u{1F1E6}-\u{1F1FF}]{2}/u)?.[0];
+  if (!flag) return null;
+  const code = [...flag].map((c) => String.fromCharCode(c.codePointAt(0) - 0x1f1e6 + 65)).join("");
+  try {
+    return regionNames.of(code);
+  } catch {
+    return null;
+  }
+}
+
+// "BOLGARIYADA ISH IMKONIYATI!" -> "Bolgariyada ish imkoniyati!"
+const sentenceCase = (s) => (/\p{Ll}/u.test(s) ? s : s.charAt(0) + s.slice(1).toLowerCase());
+
+const LABEL_VALUE = /^([\p{L}][\p{L}\p{N}\s'’‘.]{0,40}?)\s*[:：]\s*(.+)$/u;
+const HEADING = /^([\p{L}][\p{L}\p{N}\s'’‘.]{0,40}?)\s*[:：]\s*$/u;
 
 export function parsePostText(text) {
-  const lines = text.split("\n").map((l) => l.trim()).filter(Boolean);
+  const lines = stripFooter(text);
+
+  const firstIdx = lines.findIndex(Boolean);
+  const headline = firstIdx >= 0 ? sentenceCase(clean(lines[firstIdx])) : "";
+  const country = firstIdx >= 0 ? countryFromFlag(lines[firstIdx]) : null;
+
   const fields = {};
-  const extra = [];
+  const lists = {};
+  const details = [];
   const body = [];
 
-  for (const line of lines) {
-    if (/^(#[\p{L}\p{N}_]+\s*)+$/u.test(line)) continue; // hashtag-only lines
-    if (/^(https?:\/\/|t\.me\/|www\.)\S+$/i.test(line)) continue; // bare links
-    const m = line.match(LINE_RE);
-    if (m && !m[2].startsWith("//")) {
-      const field = fieldFor(m[1]);
-      if (field && !fields[field]) {
-        fields[field] = m[2].trim();
-        continue;
+  for (let i = firstIdx + 1; i < lines.length; i++) {
+    const line = clean(lines[i]);
+    if (!line) continue;
+
+    const heading = line.match(HEADING);
+    if (heading) {
+      // Collect the item lines under this heading, up to a blank line or the next label.
+      if (i + 1 < lines.length && !lines[i + 1]) i++; // allow one blank line after the heading
+      const items = [];
+      // A list ends at the next heading or a recognised "label: value" line (e.g. "Maosh: 1300 €").
+      const isLabel = (l) => HEADING.test(clean(l)) || !!fieldFor(clean(l).match(LABEL_VALUE)?.[1] || "");
+      while (i + 1 < lines.length && lines[i + 1] && !isLabel(lines[i + 1])) {
+        items.push(clean(lines[++i]));
       }
-      extra.push({ label: m[1].trim(), value: m[2].trim() });
+      const field = fieldFor(heading[1]);
+      if (field && !lists[field]) lists[field] = items.filter(Boolean);
       continue;
     }
+
+    const pair = line.match(LABEL_VALUE);
+    if (pair) {
+      const field = fieldFor(pair[1]);
+      if (field && !fields[field]) fields[field] = pair[2].trim();
+      else details.push({ label: pair[1].trim(), value: pair[2].trim() });
+      continue;
+    }
+
     body.push(line);
   }
 
-  const firstLine = (body[0] || lines[0] || "").replace(/^[^\p{L}\p{N}]+/u, "").trim();
+  const positions = fields.position || lists.position?.join(", ") || lists.openings?.join(", ");
   return {
-    title: fields.position || firstLine,
-    country: fields.country || null,
-    salary: fields.salary || null,
-    schedule: fields.schedule || null,
-    requirements: fields.requirements || null,
-    details: extra,
-    summary: body.filter((l) => l.replace(/^[^\p{L}\p{N}]+/u, "").trim() !== firstLine).slice(0, 4).join("\n"),
+    title: positions || headline,
+    headline: positions ? headline : null,
+    country: fields.country || country,
+    location: fields.location || null,
+    salary: fields.salary || lists.salary?.[0] || null,
+    schedule: fields.schedule || lists.schedule?.join(", ") || null,
+    start: fields.start || lists.start?.join(", ") || null,
+    perks: lists.perks || [],
+    requirements: lists.requirements || (fields.requirements ? [fields.requirements] : []),
+    duties: lists.duties || [],
+    openings: fields.openings || null,
+    details,
+    summary: body.slice(0, 2).join("\n"),
   };
 }
 
-export function parseChannelHtml(html, channel) {
-  const posts = [];
-  const blocks = html.split(/<div class="tgme_widget_message_wrap/).slice(1);
-
-  for (const block of blocks) {
-    const id = block.match(/data-post="[^"/]+\/(\d+)"/)?.[1];
-    if (!id) continue;
-    if (/class="tgme_widget_message [^"]*service_message/.test(block)) continue; // "Channel created", pinned notices
-
-    // Text block ends at its closing </div>; Telegram does not nest divs inside it.
-    const textHtml = block.match(/<div class="tgme_widget_message_text[^"]*"[^>]*>([\s\S]*?)<\/div>/)?.[1];
-    if (!textHtml) continue; // photo-only or service posts
-    const text = htmlToText(textHtml);
-    if (!text) continue;
-
-    const date = block.match(/<time[^>]*datetime="([^"]+)"/)?.[1] || null;
-    const photo = block.match(/tgme_widget_message_photo_wrap[^>]*background-image:url\('([^']+)'\)/)?.[1] || null;
-
-    posts.push({
-      id: Number(id),
-      url: `https://t.me/${channel}/${id}`,
-      date,
-      photo,
-      text,
-      ...parsePostText(text),
-    });
-  }
-
-  return posts.sort((a, b) => b.id - a.id);
+export function parseVacancies(html, channel) {
+  return parseChannelPosts(html, channel)
+    .filter((p) => p.text) // photo-only posts are not vacancies
+    .map(({ photos, ...p }) => ({ ...p, photo: photos[0] || null, ...parsePostText(p.text) }));
 }
