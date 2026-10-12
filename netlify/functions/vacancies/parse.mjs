@@ -16,7 +16,7 @@ const FIELDS = {
   location: ["location", "ish joyi", "joy", "joylashuv", "manzil", "shahar", "город", "локация", "место работы", "шаҳар", "шахар"],
   salary: ["salary", "pay", "wage", "maosh", "ish haqi", "зарплата", "зп", "оклад", "заработная плата", "маош", "иш ҳақи", "иш хаки"],
   schedule: ["schedule", "hours", "ish vaqti", "ish grafigi", "grafik", "график", "режим", "иш вақти", "иш вакти"],
-  start: ["start", "ish boshlanishi", "ish boshlash", "boshlanish", "jo'nab ketish", "начало"],
+  start: ["start", "season", "ish boshlanishi", "ish boshlash", "boshlanish", "jo'nab ketish", "ish mavsumi", "mavsum", "начало", "сезон"],
   openings: ["openings", "talab qilinadi", "kerak", "jami ish o'rni", "ish o'rni", "нужно", "требуется"],
   requirements: ["requirements", "talablar", "требования", "талаблар"],
   perks: ["benefits", "we offer", "tomonidan", "biz taklif qilamiz", "sharoitlar", "qulayliklar", "условия", "мы предлагаем"],
@@ -33,14 +33,14 @@ function fieldFor(label) {
   return LABELS.find(([w]) => l === w || l.startsWith(w + " ") || l.endsWith(" " + w))?.[1] ?? null;
 }
 
-// "🇩🇪" -> "Germany"
+// "🇩🇪" -> { code: "DE", name: "Germany" }. The site shows the name in the visitor's language from the code.
 const regionNames = new Intl.DisplayNames(["en"], { type: "region" });
 function countryFromFlag(line) {
   const flag = line.match(/[\u{1F1E6}-\u{1F1FF}]{2}/u)?.[0];
   if (!flag) return null;
   const code = [...flag].map((c) => String.fromCharCode(c.codePointAt(0) - 0x1f1e6 + 65)).join("");
   try {
-    return regionNames.of(code);
+    return { code, name: regionNames.of(code) };
   } catch {
     return null;
   }
@@ -63,6 +63,7 @@ export function parsePostText(text) {
   const lists = {};
   const details = [];
   const body = [];
+  const numbered = []; // "1. C TOIFALI HAYDOVCHILAR — 10 KISHI" style role lines
 
   for (let i = firstIdx + 1; i < lines.length; i++) {
     const line = clean(lines[i]);
@@ -91,14 +92,20 @@ export function parsePostText(text) {
       continue;
     }
 
+    const role = line.match(/^\d{1,2}[.)]\s*(.{3,})$/u);
+    if (role) {
+      numbered.push(sentenceCase(clean(role[1])));
+      continue;
+    }
     body.push(line);
   }
 
-  const positions = fields.position || lists.position?.join(", ") || lists.openings?.join(", ");
+  const positions = fields.position || lists.position?.join(", ") || lists.openings?.join(", ") || numbered.join(", ");
   return {
     title: positions || headline,
     headline: positions ? headline : null,
-    country: fields.country || country,
+    country: fields.country || country?.name || null,
+    countryCode: country?.code || null,
     location: fields.location || null,
     salary: fields.salary || lists.salary?.[0] || null,
     schedule: fields.schedule || lists.schedule?.join(", ") || null,
