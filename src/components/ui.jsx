@@ -1,6 +1,8 @@
 import { useEffect, useRef, useState } from "react";
 import { useNetlifyForm } from "./useNetlifyForm";
 import { SITE } from "../site";
+import { useT } from "../i18n/lang";
+import { common } from "../content/common";
 
 // Fades children in the first time they scroll into view.
 export function Reveal({ as = "div", className = "", delay = 0, fromLeft = false, style, children, ...rest }) {
@@ -116,19 +118,20 @@ export function Faq({ items }) {
 
 export function NetlifyForm({ name, className, children, submitLabel, submitClass = "btn btn-accent btn-block", footer }) {
   const { onSubmit, status } = useNetlifyForm(name);
+  const t = useT(common).form;
   return (
     <form name={name} method="POST" data-netlify="true" netlify-honeypot="bot-field" className={className} onSubmit={onSubmit}>
       <input type="hidden" name="form-name" value={name} />
       <p className="hidden-field">
         <label>
-          Don’t fill this out: <input name="bot-field" tabIndex={-1} autoComplete="off" />
+          {t.honeypot} <input name="bot-field" tabIndex={-1} autoComplete="off" />
         </label>
       </p>
       {children}
       <button type="submit" className={submitClass} disabled={status === "sending"}>
-        {status === "sending" ? "Sending…" : submitLabel}
+        {status === "sending" ? t.sending : submitLabel}
       </button>
-      {status === "error" && <div className="form-error">Something went wrong. Please call or email us instead.</div>}
+      {status === "error" && <div className="form-error">{t.error}</div>}
       {footer}
     </form>
   );

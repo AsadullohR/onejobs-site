@@ -33,3 +33,20 @@ Override with:
 | `YOUTUBE_CHANNEL_ID` | Alternative: all videos from a channel (`UC...` ID). |
 
 YouTube's public feed is used, so no API key is needed. Videos load only when a visitor presses play.
+
+## Languages (Uzbek / Russian / English)
+
+All visible text lives in `src/content/` as `{ uz, ru, en }` objects, one file per page plus
+`common.js` for navigation, footer, forms, and card labels. To change wording, edit the
+matching language in that file.
+
+The first visit follows the browser language (uz/ru/en, Uzbek otherwise); the UZ/RU/EN switch
+in the header remembers the visitor's choice.
+
+## Destination countries
+
+`src/content/countries.js` holds the five countries (Bulgaria, Montenegro, Germany, Turkey, Croatia):
+card text, salary badge, facts, popular jobs, requirements, and documents in all three languages.
+Each country page (`/countries/<slug>`) also lists that country's live vacancies, matched by the
+flag emoji at the start of each Telegram post. Photos are in `public/countries/`; Wikimedia photos
+carry the required author/licence credit on the page.
