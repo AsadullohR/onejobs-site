@@ -1,12 +1,23 @@
-import { Reveal, SectionHead, HeroStats, FeatureGrid, NetlifyForm, Field, WhatsAppB2B } from "../components/ui";
+import { Reveal, SectionHead, HeroStats, FeatureGrid } from "../components/ui";
+import RequestForm from "../components/RequestForm";
+import EmployerQuote from "../components/EmployerQuote";
+import { useSeo } from "../components/useSeo";
 import { SITE } from "../site";
 import { useT } from "../i18n/lang";
 import { employers } from "../content/employers";
 import { common } from "../content/common";
+import { FACTS } from "../content/facts";
 
 export default function Employers() {
+  useSeo("employers");
   const t = useT(employers);
   const c = useT(common);
+  const stats = [
+    FACTS.workersPlaced && { icon: "👷", value: FACTS.workersPlaced, label: t.statLabels.placed },
+    { icon: "⚡", value: FACTS.shortlistDays, label: t.statLabels.shortlist },
+    { icon: "🌍", value: String(FACTS.countries.length), label: t.statLabels.countries },
+    { icon: "🔄", value: "90", label: t.statLabels.guarantee },
+  ].filter(Boolean);
 
   return (
     <div className="theme-amber">
@@ -23,14 +34,14 @@ export default function Employers() {
             </h1>
             <p className="lead fade-up-3">{t.lead}</p>
             <div className="hero-actions fade-up-4">
-              <a href="#hire" className="btn btn-accent">{t.ctaPost}</a>
+              <a href="#request" className="btn btn-accent">{t.ctaPost}</a>
               <a href="#process" className="btn btn-ghost">{t.ctaHow}</a>
             </div>
             <p className="hero-wa fade-up-4">
               {c.whatsapp.prefer} <a href={SITE.whatsappB2BHref} target="_blank" rel="noopener noreferrer">{SITE.whatsappB2B}</a>
             </p>
           </div>
-          <HeroStats stats={t.stats} />
+          <HeroStats stats={stats} />
         </div>
       </section>
 
@@ -67,27 +78,9 @@ export default function Employers() {
         </div>
       </section>
 
-      <section id="hire" className="section bg-soft">
-        <div className="narrow">
-          <div className="section-head" style={{ marginBottom: "3rem" }}>
-            <div className="eyebrow">{t.hireEyebrow}</div>
-            <h2 className="h2">{t.hireTitle}</h2>
-            <p>{t.hireText}</p>
-            <div className="wa-row">
-              <span>{c.whatsapp.faster}</span>
-              <WhatsAppB2B message={c.whatsapp.employerMsg} />
-            </div>
-          </div>
-          <NetlifyForm name="job-order" className="light-form" submitLabel={t.form.submit} submitClass="btn btn-navy btn-block span-2">
-            <Field label={t.form.company} name="company" required />
-            <Field label={t.form.contact} name="contact" required />
-            <Field label={t.form.email} name="email" required />
-            <Field label={t.form.industry} name="industry" required />
-            <Field label={t.form.roles} name="roles" required />
-            <Field label={t.form.details} name="details" as="textarea" rows={4} className="span-2" required />
-          </NetlifyForm>
-        </div>
-      </section>
+      <EmployerQuote />
+
+      <RequestForm eyebrow={t.hireEyebrow} title={t.hireTitle} text={t.hireText} />
     </div>
   );
 }

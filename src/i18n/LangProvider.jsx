@@ -1,22 +1,11 @@
-import { useEffect, useState } from "react";
-import { CODES, STORAGE_KEY, LangContext, detectLang } from "./lang";
+import { useEffect } from "react";
+import { LangContext, LANGS } from "./lang";
 
-export default function LangProvider({ children }) {
-  const [lang, setLangState] = useState(detectLang);
-
+// The language comes from the URL (/en, /bg, …); LangRoute passes it in.
+export default function LangProvider({ lang, children }) {
   useEffect(() => {
-    document.documentElement.lang = lang;
+    document.documentElement.lang = LANGS.find((l) => l.code === lang)?.locale || lang;
   }, [lang]);
 
-  const setLang = (code) => {
-    if (!CODES.includes(code)) return;
-    setLangState(code);
-    try {
-      localStorage.setItem(STORAGE_KEY, code);
-    } catch {
-      // not persisted; the choice still applies for this visit
-    }
-  };
-
-  return <LangContext.Provider value={{ lang, setLang }}>{children}</LangContext.Provider>;
+  return <LangContext.Provider value={{ lang }}>{children}</LangContext.Provider>;
 }

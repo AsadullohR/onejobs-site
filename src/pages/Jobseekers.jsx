@@ -6,9 +6,11 @@ import { SectionHead, HeroStats, FeatureGrid, Timeline, Faq, NetlifyForm, Field 
 import { useLang, useT } from "../i18n/lang";
 import { jobseekers } from "../content/jobseekers";
 import { common } from "../content/common";
-import { COUNTRIES, countryBySlug } from "../content/countries";
+import { COUNTRIES, countryBySlug, countryText } from "../content/countries";
+import { useSeo } from "../components/useSeo";
 
 export default function Jobseekers() {
+  useSeo("jobseekers");
   const { lang } = useLang();
   const t = useT(jobseekers);
   const c = useT(common);
@@ -85,7 +87,7 @@ export default function Jobseekers() {
             >
               <option value="">{t.form.countryPh}</option>
               {COUNTRIES.map((co) => (
-                <option key={co.slug} value={co.en.name}>{co.flag} {co[lang].name}</option>
+                <option key={co.slug} value={co.en.name}>{countryText(co, lang).name}</option>
               ))}
             </Field>
             <Field label={t.form.skills} name="skills" as="textarea" rows={3} placeholder={t.form.skillsPh} />

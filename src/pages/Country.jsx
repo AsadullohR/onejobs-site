@@ -3,8 +3,10 @@ import { Reveal, SectionHead, Timeline } from "../components/ui";
 import Vacancies from "../components/Vacancies";
 import CountryCards from "../components/CountryCards";
 import NotFound from "./NotFound";
-import { useLang, useT } from "../i18n/lang";
-import { countryBySlug, countryUi } from "../content/countries";
+import Flag from "../components/Flag";
+import { useLang, useT, useLocalePath, pick } from "../i18n/lang";
+import { countryBySlug, countryUi, countryText } from "../content/countries";
+import { useSeo } from "../components/useSeo";
 import { jobseekers } from "../content/jobseekers";
 
 const FACT_ICONS = { salary: "💰", visa: "🛂", housing: "🏠", language: "🗣️" };
@@ -13,19 +15,21 @@ export default function Country() {
   const { slug } = useParams();
   const { lang } = useLang();
   const js = useT(jobseekers);
+  const lp = useLocalePath();
   const country = countryBySlug(slug);
+  useSeo("country", country ? countryText(country, lang).name : "");
   if (!country) return <NotFound />;
 
-  const t = country[lang];
-  const ui = countryUi[lang];
-  const applyTo = `/jobseekers?country=${country.slug}#apply`;
+  const t = countryText(country, lang);
+  const ui = pick(countryUi, lang);
+  const applyTo = lp(`/jobseekers?country=${country.slug}#apply`);
 
   return (
     <>
       <section className="country-hero" style={{ backgroundImage: `url(${country.photo})` }}>
         <div className="country-hero-inner">
-          <Link to="/countries" className="country-back fade-up-1">{ui.back}</Link>
-          <div className="hero-badge fade-up-1">{country.flag} {t.name}</div>
+          <Link to={lp("/countries")} className="country-back fade-up-1">{ui.back}</Link>
+          <div className="hero-badge fade-up-1"><Flag code={country.code} /> {t.name}</div>
           <h1 className="fade-up-2">{ui.workIn(t.where)}</h1>
           <p className="lead fade-up-3">{t.tagline}</p>
           <div className="hero-actions fade-up-4">
@@ -76,7 +80,7 @@ export default function Country() {
         id="vacancies"
         countryCode={country.code}
         limit={6}
-        eyebrow={`${country.flag} ${t.name.toUpperCase()}`}
+        eyebrow={t.name.toUpperCase()}
         title={ui.vacancies(t.where)}
         emptyText={ui.noVacancies(t.where)}
         className="bg-soft"

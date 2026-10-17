@@ -34,14 +34,33 @@ Override with:
 
 YouTube's public feed is used, so no API key is needed. Videos load only when a visitor presses play.
 
-## Languages (Uzbek / Russian / English)
+## Languages and addresses
 
-All visible text lives in `src/content/` as `{ uz, ru, en }` objects, one file per page plus
-`common.js` for navigation, footer, forms, and card labels. To change wording, edit the
-matching language in that file.
+Every page lives under a language prefix: `/en`, `/bg` (Bulgarian), `/me` (Montenegrin, Latin),
+`/ru`, `/uz`. Employer pages (home, employers, agencies) are translated into all five; worker
+pages (jobseekers, countries) exist in en/ru/uz and show English under `/bg` and `/me`.
 
-The first visit follows the browser language (uz/ru/en, Uzbek otherwise); the UZ/RU/EN switch
-in the header remembers the visitor's choice.
+- Text lives in `src/content/*.js` as `{ en, bg, me, ru, uz }` objects; English is the fallback.
+- The bare domain and old links without a language (e.g. `/jobseekers`) go to the visitor's
+  language: `public/_redirects` does it on Netlify (browser language or the `nf_lang` cookie the
+  language switch sets), and the app does it as a fallback.
+
+## Search engines
+
+`npm run build` pre-renders every page in every language to static HTML
+(`scripts/prerender.mjs`), with its own title, description, canonical URL, hreflang links,
+Open Graph tags, and company details (JSON-LD) on the homepage. It also writes `sitemap.xml` and
+`robots.txt`. Titles and descriptions are in `src/content/seo.js`.
+
+## Trust facts
+
+`src/content/facts.js` holds the figures employers see (workers placed, founding year, countries,
+licence number, employer quote). Empty values are hidden, never replaced with placeholders.
+
+## Forms
+
+Static form definitions for Netlify live in `public/__forms.html`; the site's forms post there.
+Form detection must be enabled in the Netlify project (Forms → Enable form detection).
 
 ## Destination countries
 
