@@ -6,6 +6,7 @@ import Flag from "./Flag";
 import { LANGS, useLang, useT, useLocalePath, saveLang, splitLangPath, withLang } from "../i18n/lang";
 import { common } from "../content/common";
 import { COUNTRIES, countryText } from "../content/countries";
+import { FACTS } from "../content/facts";
 
 // Scroll to the #hash target after navigation, or to the top on a new page.
 function useScrollOnNavigate() {
@@ -157,6 +158,7 @@ function Footer() {
             <li><a href={`mailto:${SITE.email}`}>{SITE.email}</a></li>
             <li><a href={SITE.phoneHref}>{SITE.phone}</a></li>
             <li><span>{f.hours}</span></li>
+            {FACTS.licence && <li><span>{f.licence} {FACTS.licence}</span></li>}
           </ul>
         </div>
       </div>

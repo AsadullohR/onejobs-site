@@ -16,7 +16,7 @@ export default function Employers() {
     FACTS.workersPlaced && { icon: "👷", value: FACTS.workersPlaced, label: t.statLabels.placed },
     { icon: "⚡", value: FACTS.shortlistDays, label: t.statLabels.shortlist },
     { icon: "🌍", value: String(FACTS.countries.length), label: t.statLabels.countries },
-    { icon: "🔄", value: "90", label: t.statLabels.guarantee },
+    { icon: "🔄", value: t.statLabels.guaranteeValue, label: t.statLabels.guarantee },
   ].filter(Boolean);
 
   return (

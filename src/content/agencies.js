@@ -29,7 +29,7 @@ export const agencies = {
     modelsEyebrow: "PARTNERSHIP MODELS", modelsTitle: "Choose How We Work Together", popular: "Most Popular", applyModel: "Apply for This Model →",
     models: [
       { title: "Referral Partner", text: "Send us candidates you can't place. We do the work; you earn a referral fee.", perks: ["No minimum volume", "Simple referral agreement", "Earn 15–20% of the placement fee", "Ideal for boutique agencies"] },
-      { title: "Job Order Partner", text: "Share your open vacancies and we'll source qualified candidates from our network.", perks: ["Access to 280K+ talent pool", "5–10 day shortlist delivery", "Co-branded candidate packs", "Split fee on placement"] },
+      { title: "Job Order Partner", text: "Share your open vacancies and we'll source qualified candidates from our network.", perks: ["Access to 280K+ talent pool", "7–14 day shortlist delivery", "Co-branded candidate packs", "Split fee on placement"] },
       { title: "White-Label Partner", text: "We work as your back office. Our services are delivered under your brand.", perks: ["Full white-label documentation", "Dedicated account manager", "Custom SLA and reporting", "For established agencies"] },
     ],
     processEyebrow: "ONBOARDING", processTitle: "How We Start Working Together",
@@ -75,7 +75,7 @@ export const agencies = {
     modelsEyebrow: "МОДЕЛИ НА ПАРТНЬОРСТВО", modelsTitle: "Изберете как да работим заедно", popular: "Най-избиран", applyModel: "Изберете този модел →",
     models: [
       { title: "Партньор за препоръки", text: "Изпращайте ни кандидати, които не можете да наемете. Ние вършим работата, вие получавате комисиона.", perks: ["Без минимален обем", "Опростен договор", "15–20% от нашето възнаграждение", "Подходящ за малки агенции"] },
-      { title: "Партньор за заявки", text: "Споделете отворените си позиции и ще намерим квалифицирани кандидати от нашата мрежа.", perks: ["Достъп до 280 000+ кандидати", "Кандидати за 5–10 дни", "Профили на кандидати с вашата марка", "Споделено възнаграждение"] },
+      { title: "Партньор за заявки", text: "Споделете отворените си позиции и ще намерим квалифицирани кандидати от нашата мрежа.", perks: ["Достъп до 280 000+ кандидати", "Кандидати за 7–14 дни", "Профили на кандидати с вашата марка", "Споделено възнаграждение"] },
       { title: "White-label партньор", text: "Работим като ваш бек офис, а услугите се предоставят под вашата марка.", perks: ["Документи с вашата марка", "Личен мениджър", "Индивидуални SLA и отчети", "За утвърдени агенции"] },
     ],
     processEyebrow: "ЗАПОЧВАНЕ", processTitle: "Как започваме работа заедно",
@@ -121,7 +121,7 @@ export const agencies = {
     modelsEyebrow: "MODELI SARADNJE", modelsTitle: "Izaberite kako da sarađujemo", popular: "Najčešći izbor", applyModel: "Izaberite ovaj model →",
     models: [
       { title: "Partner za preporuke", text: "Šaljite nam kandidate koje ne možete zaposliti. Mi radimo posao, vi dobijate proviziju.", perks: ["Bez minimalnog obima", "Jednostavan ugovor", "15–20% naše naknade", "Idealno za manje agencije"] },
-      { title: "Partner za zahtjeve", text: "Podijelite otvorene pozicije i pronaći ćemo kvalifikovane kandidate iz naše mreže.", perks: ["Pristup bazi od 280.000+ kandidata", "Kandidati za 5–10 dana", "Profili kandidata sa vašim brendom", "Podjela naknade"] },
+      { title: "Partner za zahtjeve", text: "Podijelite otvorene pozicije i pronaći ćemo kvalifikovane kandidate iz naše mreže.", perks: ["Pristup bazi od 280.000+ kandidata", "Kandidati za 7–14 dana", "Profili kandidata sa vašim brendom", "Podjela naknade"] },
       { title: "White-label partner", text: "Radimo kao vaš back-office, a usluge se pružaju pod vašim brendom.", perks: ["Dokumentacija sa vašim brendom", "Lični menadžer", "Prilagođeni SLA i izvještaji", "Za etablirane agencije"] },
     ],
     processEyebrow: "POČETAK", processTitle: "Kako počinjemo saradnju",
@@ -167,7 +167,7 @@ export const agencies = {
     modelsEyebrow: "МОДЕЛИ ПАРТНЁРСТВА", modelsTitle: "Выберите формат сотрудничества", popular: "Популярный выбор", applyModel: "Выбрать эту модель →",
     models: [
       { title: "Партнёр по рекомендациям", text: "Передавайте кандидатов, которых не можете трудоустроить. Мы делаем работу, вы получаете комиссию.", perks: ["Без минимального объёма", "Простой договор", "15–20% от нашего вознаграждения", "Подходит небольшим агентствам"] },
-      { title: "Партнёр по заявкам", text: "Делитесь открытыми вакансиями — мы найдём квалифицированных кандидатов в нашей сети.", perks: ["Доступ к базе 280 000+ кандидатов", "Шорт-лист за 5–10 дней", "Пакеты кандидатов с вашим брендом", "Раздел вознаграждения"] },
+      { title: "Партнёр по заявкам", text: "Делитесь открытыми вакансиями — мы найдём квалифицированных кандидатов в нашей сети.", perks: ["Доступ к базе 280 000+ кандидатов", "Шорт-лист за 7–14 дней", "Пакеты кандидатов с вашим брендом", "Раздел вознаграждения"] },
       { title: "White-label партнёр", text: "Мы работаем как ваш бэк-офис, а услуги оказываются под вашим брендом.", perks: ["Документы под вашим брендом", "Персональный менеджер", "Индивидуальные SLA и отчётность", "Для крупных агентств"] },
     ],
     processEyebrow: "НАЧАЛО РАБОТЫ", processTitle: "Как мы начинаем сотрудничество",
@@ -213,7 +213,7 @@ export const agencies = {
     modelsEyebrow: "HAMKORLIK SHAKLLARI", modelsTitle: "Hamkorlik shaklini tanlang", popular: "Eng ommabop", applyModel: "Shu shaklni tanlash →",
     models: [
       { title: "Tavsiya hamkori", text: "Joylashtira olmagan nomzodlaringizni yuboring. Ishni biz qilamiz, siz komissiya olasiz.", perks: ["Minimal hajm talab qilinmaydi", "Oddiy shartnoma", "Daromadimizning 15–20% i", "Kichik agentliklar uchun qulay"] },
-      { title: "Buyurtma hamkori", text: "Ochiq vakansiyalaringizni yuboring — tarmogʻimizdan malakali nomzodlar topamiz.", perks: ["280 000+ nomzodlar bazasi", "5–10 kunda nomzodlar roʻyxati", "Brendingiz bilan nomzod paketlari", "Daromadni boʻlishish"] },
+      { title: "Buyurtma hamkori", text: "Ochiq vakansiyalaringizni yuboring — tarmogʻimizdan malakali nomzodlar topamiz.", perks: ["280 000+ nomzodlar bazasi", "7–14 kunda nomzodlar roʻyxati", "Brendingiz bilan nomzod paketlari", "Daromadni boʻlishish"] },
       { title: "White-label hamkor", text: "Biz sizning bek-ofisingiz boʻlamiz, xizmatlar esa sizning brendingiz ostida koʻrsatiladi.", perks: ["Brendingiz ostidagi hujjatlar", "Shaxsiy menejer", "Individual SLA va hisobotlar", "Yirik agentliklar uchun"] },
     ],
     processEyebrow: "BOSHLASH", processTitle: "Hamkorlikni qanday boshlaymiz",

@@ -3,9 +3,9 @@ export const home = {
   en: {
     eyebrow: "Licensed recruitment agency · Uzbekistan → Europe",
     title: ["Verified, document-ready", "workers from Uzbekistan"],
-    lead: "We supply pre-screened workers for construction, hotels and restaurants, farms, and transport. Work permits, visas, and travel are handled by us. You receive a shortlist in 5–10 days.",
+    lead: "We supply pre-screened workers for construction, hotels and restaurants, farms, and transport. Work permits, visas, and travel are handled by us. You receive a shortlist in 7–14 days.",
     ctaPrimary: "Request Workers →",
-    trust: { placed: "workers placed", countries: "countries", since: "founded · One Group", licence: "Licence", shortlist: "days to shortlist" },
+    trust: { placed: "workers placed", countries: "countries", since: "founded · One Group", licence: "licence No.", shortlist: "days to shortlist" },
     heroAlt: "Construction workers on a building site",
     supplyEyebrow: "WHAT WE SUPPLY", supplyTitle: "Workers for the roles you can't fill locally",
     sectors: [
@@ -27,7 +27,7 @@ export const home = {
     processEyebrow: "HOW IT WORKS", processTitle: "From request to worker on site",
     process: [
       { title: "Send your request", text: "Roles, number of workers, start date, salary, and housing." },
-      { title: "Shortlist in 5–10 days", text: "CVs, video introductions, and test results for each candidate." },
+      { title: "Shortlist in 7–14 days", text: "CVs, video introductions, and test results for each candidate." },
       { title: "You interview and choose", text: "Online interviews at a time that suits you. We handle the communication." },
       { title: "Permits and visas", text: "We prepare the documents and guide each worker through the embassy." },
       { title: "Arrival", text: "Workers travel and start. We follow up with you after arrival." },
@@ -39,9 +39,9 @@ export const home = {
   bg: {
     eyebrow: "Лицензирана агенция за подбор · Узбекистан → Европа",
     title: ["Проверени работници", "от Узбекистан с готови документи"],
-    lead: "Осигуряваме предварително подбрани работници за строителство, хотели и ресторанти, селско стопанство и транспорт. Разрешенията за работа, визите и пътуването са наша грижа. Получавате кандидати за 5–10 дни.",
+    lead: "Осигуряваме предварително подбрани работници за строителство, хотели и ресторанти, селско стопанство и транспорт. Разрешенията за работа, визите и пътуването са наша грижа. Получавате кандидати за 7–14 дни.",
     ctaPrimary: "Заявете работници →",
-    trust: { placed: "наети работници", countries: "държави", since: "основана · One Group", licence: "Лиценз", shortlist: "дни до кандидатите" },
+    trust: { placed: "наети работници", countries: "държави", since: "основана · One Group", licence: "лиценз №", shortlist: "дни до кандидатите" },
     heroAlt: "Строителни работници на обект",
     supplyEyebrow: "КАКВО ОСИГУРЯВАМЕ", supplyTitle: "Работници за позициите, които не можете да запълните на място",
     sectors: [
@@ -63,7 +63,7 @@ export const home = {
     processEyebrow: "КАК РАБОТИМ", processTitle: "От заявката до работника на обекта",
     process: [
       { title: "Изпратете заявка", text: "Позиции, брой работници, начална дата, заплата и настаняване." },
-      { title: "Кандидати за 5–10 дни", text: "CV, видео представяне и резултати от тестовете за всеки кандидат." },
+      { title: "Кандидати за 7–14 дни", text: "CV, видео представяне и резултати от тестовете за всеки кандидат." },
       { title: "Вие интервюирате и избирате", text: "Онлайн интервюта в удобно за вас време. Ние водим комуникацията." },
       { title: "Разрешения и визи", text: "Подготвяме документите и водим всеки работник през посолството." },
       { title: "Пристигане", text: "Работниците пътуват и започват работа. Свързваме се с вас след пристигането." },
@@ -75,9 +75,9 @@ export const home = {
   me: {
     eyebrow: "Licencirana agencija za zapošljavanje · Uzbekistan → Evropa",
     title: ["Provjereni radnici iz Uzbekistana", "sa spremnom dokumentacijom"],
-    lead: "Obezbjeđujemo unaprijed odabrane radnike za građevinu, hotele i restorane, poljoprivredu i transport. Radne dozvole, vize i putovanje su naša briga. Kandidate dobijate za 5–10 dana.",
+    lead: "Obezbjeđujemo unaprijed odabrane radnike za građevinu, hotele i restorane, poljoprivredu i transport. Radne dozvole, vize i putovanje su naša briga. Kandidate dobijate za 7–14 dana.",
     ctaPrimary: "Zatražite radnike →",
-    trust: { placed: "zaposlenih radnika", countries: "države", since: "osnovana · One Group", licence: "Licenca", shortlist: "dana do kandidata" },
+    trust: { placed: "zaposlenih radnika", countries: "države", since: "osnovana · One Group", licence: "licenca br.", shortlist: "dana do kandidata" },
     heroAlt: "Građevinski radnici na gradilištu",
     supplyEyebrow: "ŠTA OBEZBJEĐUJEMO", supplyTitle: "Radnici za pozicije koje ne možete popuniti lokalno",
     sectors: [
@@ -99,7 +99,7 @@ export const home = {
     processEyebrow: "KAKO RADIMO", processTitle: "Od zahtjeva do radnika na gradilištu",
     process: [
       { title: "Pošaljite zahtjev", text: "Pozicije, broj radnika, datum početka, plata i smještaj." },
-      { title: "Kandidati za 5–10 dana", text: "CV, video predstavljanje i rezultati testova za svakog kandidata." },
+      { title: "Kandidati za 7–14 dana", text: "CV, video predstavljanje i rezultati testova za svakog kandidata." },
       { title: "Vi intervjuišete i birate", text: "Online intervjui u vrijeme koje vama odgovara. Mi vodimo komunikaciju." },
       { title: "Dozvole i vize", text: "Pripremamo dokumenta i vodimo svakog radnika kroz ambasadu." },
       { title: "Dolazak", text: "Radnici putuju i počinju sa radom. Javljamo vam se nakon dolaska." },
@@ -111,9 +111,9 @@ export const home = {
   ru: {
     eyebrow: "Лицензированное кадровое агентство · Узбекистан → Европа",
     title: ["Проверенные работники", "из Узбекистана с готовыми документами"],
-    lead: "Предоставляем отобранных работников для строительства, отелей и ресторанов, сельского хозяйства и транспорта. Разрешения на работу, визы и дорогу берём на себя. Шорт-лист кандидатов — за 5–10 дней.",
+    lead: "Предоставляем отобранных работников для строительства, отелей и ресторанов, сельского хозяйства и транспорта. Разрешения на работу, визы и дорогу берём на себя. Шорт-лист кандидатов — за 7–14 дней.",
     ctaPrimary: "Запросить работников →",
-    trust: { placed: "трудоустроенных работников", countries: "стран", since: "основана · One Group", licence: "Лицензия", shortlist: "дней до шорт-листа" },
+    trust: { placed: "трудоустроенных работников", countries: "стран", since: "основана · One Group", licence: "лицензия №", shortlist: "дней до шорт-листа" },
     heroAlt: "Строительные рабочие на объекте",
     supplyEyebrow: "КОГО МЫ ПРЕДОСТАВЛЯЕМ", supplyTitle: "Работники на позиции, которые сложно закрыть на месте",
     sectors: [
@@ -135,7 +135,7 @@ export const home = {
     processEyebrow: "КАК МЫ РАБОТАЕМ", processTitle: "От заявки до работника на объекте",
     process: [
       { title: "Отправьте заявку", text: "Позиции, количество, дата начала, зарплата и жильё." },
-      { title: "Шорт-лист за 5–10 дней", text: "Резюме, видеопрезентации и результаты тестов по каждому кандидату." },
+      { title: "Шорт-лист за 7–14 дней", text: "Резюме, видеопрезентации и результаты тестов по каждому кандидату." },
       { title: "Вы проводите интервью", text: "Онлайн-собеседования в удобное для вас время. Всю переписку ведём мы." },
       { title: "Разрешения и визы", text: "Готовим документы и сопровождаем каждого работника в посольстве." },
       { title: "Приезд", text: "Работники приезжают и выходят на работу. Мы связываемся с вами после приезда." },
@@ -147,9 +147,9 @@ export const home = {
   uz: {
     eyebrow: "Litsenziyali rekruting agentligi · Oʻzbekiston → Yevropa",
     title: ["Tekshirilgan, hujjatlari tayyor", "oʻzbekistonlik ishchilar"],
-    lead: "Qurilish, mehmonxona va restoranlar, qishloq xoʻjaligi va transport uchun saralangan ishchilarni taqdim etamiz. Ishlash ruxsatnomasi, viza va yoʻl masalalarini oʻzimiz hal qilamiz. Nomzodlar roʻyxati 5–10 kunda tayyor.",
+    lead: "Qurilish, mehmonxona va restoranlar, qishloq xoʻjaligi va transport uchun saralangan ishchilarni taqdim etamiz. Ishlash ruxsatnomasi, viza va yoʻl masalalarini oʻzimiz hal qilamiz. Nomzodlar roʻyxati 7–14 kunda tayyor.",
     ctaPrimary: "Ishchi soʻrash →",
-    trust: { placed: "ishchi joylashtirildi", countries: "ta davlat", since: "yildan beri · One Group", licence: "Litsenziya", shortlist: "kunda nomzodlar" },
+    trust: { placed: "ishchi joylashtirildi", countries: "ta davlat", since: "yildan beri · One Group", licence: "litsenziya №", shortlist: "kunda nomzodlar" },
     heroAlt: "Qurilish maydonidagi ishchilar",
     supplyEyebrow: "KIMLARNI TAQDIM ETAMIZ", supplyTitle: "Mahalliy bozordan topish qiyin boʻlgan ishchilar",
     sectors: [
@@ -171,7 +171,7 @@ export const home = {
     processEyebrow: "QANDAY ISHLAYMIZ", processTitle: "Arizadan ish joyidagi ishchigacha",
     process: [
       { title: "Ariza yuboring", text: "Lavozimlar, ishchilar soni, boshlanish sanasi, maosh va turar joy." },
-      { title: "5–10 kunda nomzodlar", text: "Har bir nomzod boʻyicha rezyume, video-taqdimot va test natijalari." },
+      { title: "7–14 kunda nomzodlar", text: "Har bir nomzod boʻyicha rezyume, video-taqdimot va test natijalari." },
       { title: "Siz suhbatlashib tanlaysiz", text: "Qulay vaqtda onlayn suhbatlar. Yozishmalarni biz olib boramiz." },
       { title: "Ruxsatnoma va viza", text: "Hujjatlarni tayyorlaymiz va har bir ishchini elchixonadan oʻtkazamiz." },
       { title: "Yetib kelish", text: "Ishchilar yetib kelib ishga chiqadi. Kelgandan keyin siz bilan bogʻlanamiz." },

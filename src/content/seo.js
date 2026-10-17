@@ -6,18 +6,18 @@ export const WORKER_LANGS = ["en", "ru", "uz"];
 
 export const seo = {
   home: {
-    en: { title: "Workers from Uzbekistan for European Employers | OneJobs", description: "Licensed agency supplying verified, document-ready workers from Uzbekistan for construction, hotels, farms, and transport in Bulgaria, Montenegro, Croatia, Germany, and Turkey. Shortlist in 5–10 days." },
-    bg: { title: "Работници от Узбекистан за работодатели в България и Европа | OneJobs", description: "Лицензирана агенция: проверени работници от Узбекистан с готови документи за строителство, хотели, селско стопанство и транспорт. Кандидати за 5–10 дни." },
-    me: { title: "Radnici iz Uzbekistana za poslodavce u Crnoj Gori i Evropi | OneJobs", description: "Licencirana agencija: provjereni radnici iz Uzbekistana sa spremnom dokumentacijom za građevinu, hotele, poljoprivredu i transport. Kandidati za 5–10 dana." },
-    ru: { title: "Работники из Узбекистана для работодателей в Европе | OneJobs", description: "Лицензированное агентство: проверенные работники из Узбекистана с готовыми документами для строительства, отелей, сельского хозяйства и транспорта. Шорт-лист за 5–10 дней." },
-    uz: { title: "Yevropa ish beruvchilari uchun Oʻzbekistondan ishchilar | OneJobs", description: "Litsenziyali agentlik: qurilish, mehmonxona, qishloq xoʻjaligi va transport uchun tekshirilgan, hujjatlari tayyor ishchilar. Nomzodlar 5–10 kunda." },
+    en: { title: "Workers from Uzbekistan for European Employers | OneJobs", description: "Licensed agency supplying verified, document-ready workers from Uzbekistan for construction, hotels, farms, and transport in Bulgaria, Montenegro, Croatia, Germany, and Turkey. Shortlist in 7–14 days." },
+    bg: { title: "Работници от Узбекистан за работодатели в България и Европа | OneJobs", description: "Лицензирана агенция: проверени работници от Узбекистан с готови документи за строителство, хотели, селско стопанство и транспорт. Кандидати за 7–14 дни." },
+    me: { title: "Radnici iz Uzbekistana za poslodavce u Crnoj Gori i Evropi | OneJobs", description: "Licencirana agencija: provjereni radnici iz Uzbekistana sa spremnom dokumentacijom za građevinu, hotele, poljoprivredu i transport. Kandidati za 7–14 dana." },
+    ru: { title: "Работники из Узбекистана для работодателей в Европе | OneJobs", description: "Лицензированное агентство: проверенные работники из Узбекистана с готовыми документами для строительства, отелей, сельского хозяйства и транспорта. Шорт-лист за 7–14 дней." },
+    uz: { title: "Yevropa ish beruvchilari uchun Oʻzbekistondan ishchilar | OneJobs", description: "Litsenziyali agentlik: qurilish, mehmonxona, qishloq xoʻjaligi va transport uchun tekshirilgan, hujjatlari tayyor ishchilar. Nomzodlar 7–14 kunda." },
   },
   employers: {
-    en: { title: "Hire Workers from Uzbekistan — For Employers | OneJobs", description: "How we recruit, screen, and deliver workers from Uzbekistan: sectors, process, permits, visas, and a 90-day replacement guarantee. Request workers online." },
-    bg: { title: "Наемане на работници от Узбекистан — за работодатели | OneJobs", description: "Как подбираме и изпращаме работници от Узбекистан: сектори, процес, разрешения за работа, визи и 90-дневна гаранция за замяна. Заявете работници онлайн." },
-    me: { title: "Zapošljavanje radnika iz Uzbekistana — za poslodavce | OneJobs", description: "Kako biramo i šaljemo radnike iz Uzbekistana: sektori, proces, radne dozvole, vize i 90-dnevna garancija zamjene. Zatražite radnike online." },
-    ru: { title: "Найм работников из Узбекистана — работодателям | OneJobs", description: "Как мы подбираем и направляем работников из Узбекистана: отрасли, процесс, разрешения, визы и 90-дневная гарантия замены. Запросите работников онлайн." },
-    uz: { title: "Oʻzbekistondan ishchi yollash — ish beruvchilarga | OneJobs", description: "Oʻzbekistondan ishchilarni qanday tanlab yuboramiz: sohalar, jarayon, ruxsatnomalar, vizalar va 90 kunlik almashtirish kafolati." },
+    en: { title: "Hire Workers from Uzbekistan — For Employers | OneJobs", description: "How we recruit, screen, and deliver workers from Uzbekistan: sectors, process, permits, visas, and free worker replacement. Request workers online." },
+    bg: { title: "Наемане на работници от Узбекистан — за работодатели | OneJobs", description: "Как подбираме и изпращаме работници от Узбекистан: сектори, процес, разрешения за работа, визи и безплатна замяна на работник. Заявете работници онлайн." },
+    me: { title: "Zapošljavanje radnika iz Uzbekistana — za poslodavce | OneJobs", description: "Kako biramo i šaljemo radnike iz Uzbekistana: sektori, proces, radne dozvole, vize i besplatna zamjena radnika. Zatražite radnike online." },
+    ru: { title: "Найм работников из Узбекистана — работодателям | OneJobs", description: "Как мы подбираем и направляем работников из Узбекистана: отрасли, процесс, разрешения, визы и бесплатная замена работника. Запросите работников онлайн." },
+    uz: { title: "Oʻzbekistondan ishchi yollash — ish beruvchilarga | OneJobs", description: "Oʻzbekistondan ishchilarni qanday tanlab yuboramiz: sohalar, jarayon, ruxsatnomalar, vizalar va ishchini bepul almashtirish." },
   },
   agencies: {
     en: { title: "Partnerships for Recruitment Agencies | OneJobs", description: "Share job orders, refer candidates, or white-label our recruitment from Uzbekistan. Partnership models for licensed agencies." },

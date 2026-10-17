@@ -47,6 +47,7 @@ function organizationJsonLd(lang) {
     telephone: SITE.phone,
     email: SITE.email,
     foundingDate: String(FACTS.since),
+    ...(FACTS.licence && { identifier: { "@type": "PropertyValue", name: "Private employment agency licence (Uzbekistan)", value: FACTS.licence } }),
     address: { "@type": "PostalAddress", addressLocality: "Andijan", addressCountry: "UZ" },
     areaServed: FACTS.countries.map((code) => ({ "@type": "Country", name: COUNTRIES.find((c) => c.code === code).en.name })),
     sameAs: ["https://t.me/onejobs_vakansiyalar", "https://t.me/onejobs_natija", "https://www.youtube.com/playlist?list=PLS7Wa5BXaxCQ"],
