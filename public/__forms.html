@@ -1,0 +1,29 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="robots" content="noindex" />
+    <title>Forms</title>
+  </head>
+  <body>
+    <!-- Static copies of every site form so Netlify Forms detects them at deploy time.
+         The React forms POST here (src/components/useNetlifyForm.js).
+         Keep field names in sync with src/components/RequestForm.jsx and src/pages/*.jsx. -->
+    <form name="contact" netlify netlify-honeypot="bot-field" hidden>
+      <input name="name" /><input name="contact" /><textarea name="message"></textarea>
+      <input name="email" /><input name="company" />
+    </form>
+    <form name="job-order" netlify netlify-honeypot="bot-field" hidden>
+      <input name="company" /><input name="contact" /><input name="email" /><input name="country" />
+      <input name="industry" /><input name="roles" /><input name="deadline" /><input name="language" />
+      <textarea name="details"></textarea>
+    </form>
+    <form name="jobseeker-application" netlify netlify-honeypot="bot-field" hidden>
+      <input name="name" /><input name="contact" /><input name="country" /><input name="vacancy" /><textarea name="skills"></textarea>
+    </form>
+    <form name="agency-partnership" netlify netlify-honeypot="bot-field" hidden>
+      <input name="agency" /><input name="contact_person" /><input name="contact" />
+      <input name="country" /><input name="model" /><textarea name="details"></textarea>
+    </form>
+  </body>
+</html>

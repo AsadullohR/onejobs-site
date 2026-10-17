@@ -1,10 +1,12 @@
 import { useEffect, useState } from "react";
-import { Link, NavLink, Outlet, useLocation } from "react-router-dom";
+import { Link, NavLink, Outlet, useLocation, useNavigate } from "react-router-dom";
 import logo from "../assets/logo-onejobs.png";
 import { SITE } from "../site";
-import { LANGS, useLang, useT } from "../i18n/lang";
+import Flag from "./Flag";
+import { LANGS, useLang, useT, useLocalePath, saveLang, splitLangPath, withLang } from "../i18n/lang";
 import { common } from "../content/common";
-import { COUNTRIES } from "../content/countries";
+import { COUNTRIES, countryText } from "../content/countries";
+import { FACTS } from "../content/facts";
 
 // Scroll to the #hash target after navigation, or to the top on a new page.
 function useScrollOnNavigate() {
@@ -22,8 +24,18 @@ function useScrollOnNavigate() {
 }
 
 function LangSwitch() {
-  const { lang, setLang } = useLang();
+  const { lang } = useLang();
   const t = useT(common);
+  const navigate = useNavigate();
+  const { pathname, search, hash } = useLocation();
+
+  const choose = (code) => {
+    saveLang(code);
+    // Netlify reads this cookie when redirecting the bare domain (see public/_redirects).
+    document.cookie = `nf_lang=${code}; path=/; max-age=31536000; samesite=lax`;
+    navigate(withLang(splitLangPath(pathname).rest, code) + search + hash);
+  };
+
   return (
     <div className="lang-switch" role="group" aria-label={t.nav.language}>
       {LANGS.map((l) => (
@@ -33,8 +45,8 @@ function LangSwitch() {
           className={l.code === lang ? "active" : ""}
           aria-pressed={l.code === lang}
           title={l.name}
-          lang={l.code}
-          onClick={() => setLang(l.code)}
+          lang={l.locale}
+          onClick={() => choose(l.code)}
         >
           {l.label}
         </button>
@@ -45,24 +57,25 @@ function LangSwitch() {
 
 function Nav() {
   const t = useT(common).nav;
+  const lp = useLocalePath();
   const [open, setOpen] = useState(false);
   const { pathname, hash } = useLocation();
 
   useEffect(() => setOpen(false), [pathname, hash]);
 
   const items = [
-    { to: "/", label: t.home, end: true },
-    { to: "/jobseekers", label: t.jobseekers },
-    { to: "/countries", label: t.countries },
-    { to: "/employers", label: t.employers },
-    { to: "/agencies", label: t.agencies },
+    { to: lp("/"), label: t.home, end: true },
+    { to: lp("/employers"), label: t.employers },
+    { to: lp("/agencies"), label: t.agencies },
+    { to: lp("/countries"), label: t.countries },
+    { to: lp("/jobseekers"), label: t.jobseekers },
   ];
   const linkClass = ({ isActive }) => `nav-link${isActive ? " active" : ""}`;
 
   return (
     <>
       <nav className="nav" aria-label="Main">
-        <Link to="/" className="nav-logo" aria-label={`${SITE.name} — ${t.home}`}>
+        <Link to={lp("/")} className="nav-logo" aria-label={`${SITE.name} — ${t.home}`}>
           <img src={logo} alt={SITE.name} />
         </Link>
         <div className="nav-links">
@@ -71,11 +84,10 @@ function Nav() {
               {n.label}
             </NavLink>
           ))}
-          <Link to="/#contact" className="nav-link">{t.contact}</Link>
         </div>
         <div className="nav-right">
           <LangSwitch />
-          <Link to="/#contact" className="btn btn-primary nav-cta">{t.cta}</Link>
+          <Link to={lp("/#request")} className="btn btn-primary nav-cta">{t.cta}</Link>
           <button
             className={`hamburger${open ? " open" : ""}`}
             aria-label={open ? t.menuClose : t.menuOpen}
@@ -95,8 +107,7 @@ function Nav() {
               {n.label}
             </NavLink>
           ))}
-          <Link to="/#contact">{t.contact}</Link>
-          <Link to="/#contact" className="btn btn-primary">{t.cta}</Link>
+          <Link to={lp("/#request")} className="btn btn-primary">{t.cta}</Link>
         </div>
       )}
     </>
@@ -105,6 +116,7 @@ function Nav() {
 
 function Footer() {
   const { lang } = useLang();
+  const lp = useLocalePath();
   const c = useT(common);
   const f = c.footer;
   return (
@@ -117,25 +129,25 @@ function Footer() {
         <div>
           <div className="footer-title">{f.company}</div>
           <ul className="footer-links">
-            <li><Link to="/jobseekers">{c.nav.jobseekers}</Link></li>
-            <li><Link to="/employers">{c.nav.employers}</Link></li>
-            <li><Link to="/agencies">{c.nav.agencies}</Link></li>
-            <li><Link to="/jobseekers#faq">{f.faq}</Link></li>
+            <li><Link to={lp("/employers")}>{c.nav.employers}</Link></li>
+            <li><Link to={lp("/agencies")}>{c.nav.agencies}</Link></li>
+            <li><Link to={lp("/jobseekers")}>{c.nav.jobseekers}</Link></li>
+            <li><Link to={lp("/jobseekers#faq")}>{f.faq}</Link></li>
+          </ul>
+        </div>
+        <div>
+          <div className="footer-title">{f.services}</div>
+          <ul className="footer-links">
+            {f.serviceLinks.map((s, i) => (
+              <li key={s}><Link to={`${lp("/")}?sector=${i}#request`}>{s}</Link></li>
+            ))}
           </ul>
         </div>
         <div>
           <div className="footer-title">{f.countries}</div>
           <ul className="footer-links">
             {COUNTRIES.map((co) => (
-              <li key={co.slug}><Link to={`/countries/${co.slug}`}>{co.flag} {co[lang].name}</Link></li>
-            ))}
-          </ul>
-        </div>
-        <div>
-          <div className="footer-title">{f.services}</div>
-          <ul className="footer-links">
-            {f.serviceLinks.map((s) => (
-              <li key={s}><Link to="/#services">{s}</Link></li>
+              <li key={co.slug}><Link to={lp(`/countries/${co.slug}`)}><Flag code={co.code} /> {countryText(co, lang).name}</Link></li>
             ))}
           </ul>
         </div>
@@ -146,12 +158,13 @@ function Footer() {
             <li><a href={`mailto:${SITE.email}`}>{SITE.email}</a></li>
             <li><a href={SITE.phoneHref}>{SITE.phone}</a></li>
             <li><span>{f.hours}</span></li>
+            {FACTS.licence && <li><span>{f.licence} {FACTS.licence}</span></li>}
           </ul>
         </div>
       </div>
       <div className="footer-bottom">
         <span>© {new Date().getFullYear()} {SITE.name}. {f.rights}</span>
-        <Link to="/#contact" style={{ color: "rgba(255,255,255,0.4)" }}>{f.consult}</Link>
+        <Link to={lp("/#request")} style={{ color: "rgba(255,255,255,0.4)" }}>{f.consult}</Link>
       </div>
     </footer>
   );

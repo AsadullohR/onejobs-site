@@ -241,7 +241,26 @@ export const COUNTRIES = [
 
 export const countryBySlug = (slug) => COUNTRIES.find((c) => c.slug === slug);
 
-// Labels for the country page and country cards.
+// Country names for the employer-only languages. Detailed country pages are written for workers,
+// so in Bulgarian and Montenegrin they show the English text with these local names.
+const LOCAL_NAMES = {
+  bg: { BG: ["България", "в България"], ME: ["Черна гора", "в Черна гора"], DE: ["Германия", "в Германия"], TR: ["Турция", "в Турция"], HR: ["Хърватия", "в Хърватия"] },
+  me: { BG: ["Bugarska", "u Bugarskoj"], ME: ["Crna Gora", "u Crnoj Gori"], DE: ["Njemačka", "u Njemačkoj"], TR: ["Turska", "u Turskoj"], HR: ["Hrvatska", "u Hrvatskoj"] },
+};
+
+// Full country text in `lang`, falling back to English with the local name.
+export function countryText(country, lang) {
+  if (country[lang]) return country[lang];
+  const local = LOCAL_NAMES[lang]?.[country.code];
+  return local ? { ...country.en, name: local[0], where: local[1] } : country.en;
+}
+
+export const countryName = (code, lang) => {
+  const c = COUNTRIES.find((x) => x.code === code);
+  return c ? countryText(c, lang).name : code;
+};
+
+// Labels for the country page and country cards (worker-facing: en/ru/uz; others fall back to en).
 export const countryUi = {
   en: {
     eyebrow: "DESTINATIONS", title: "Countries We Send Workers To", readMore: "Read more →", all: "All countries →",

@@ -1,10 +1,12 @@
 import { Reveal, SectionHead, HeroStats, FeatureGrid, Timeline, Faq, NetlifyForm, Field, WhatsAppB2B } from "../components/ui";
 import { SITE } from "../site";
+import { useSeo } from "../components/useSeo";
 import { useT } from "../i18n/lang";
 import { agencies, MODEL_STYLE } from "../content/agencies";
 import { common } from "../content/common";
 
 export default function Agencies() {
+  useSeo("agencies");
   const t = useT(agencies);
   const c = useT(common);
   // Submissions always carry the English model name so they read the same in Netlify.

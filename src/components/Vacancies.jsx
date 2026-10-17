@@ -1,17 +1,19 @@
 import { Link } from "react-router-dom";
 import { Reveal } from "./ui";
 import { useFeed } from "./useFeed";
-import { useLang, useT } from "../i18n/lang";
+import { useLang, useT, useLocalePath } from "../i18n/lang";
 import { common } from "../content/common";
-import { COUNTRIES } from "../content/countries";
+import { COUNTRIES, countryName } from "../content/countries";
 
 // Browsers ship incomplete Uzbek locale data, so month and country names come from the site itself.
 const MONTHS = {
   uz: ["yan", "fev", "mar", "apr", "may", "iyn", "iyl", "avg", "sen", "okt", "noy", "dek"],
   ru: ["янв", "фев", "мар", "апр", "мая", "июн", "июл", "авг", "сен", "окт", "ноя", "дек"],
   en: ["Jan", "Feb", "Mar", "Apr", "May", "Jun", "Jul", "Aug", "Sep", "Oct", "Nov", "Dec"],
+  bg: ["яну", "фев", "мар", "апр", "май", "юни", "юли", "авг", "сеп", "окт", "ное", "дек"],
+  me: ["jan", "feb", "mar", "apr", "maj", "jun", "jul", "avg", "sep", "okt", "nov", "dec"],
 };
-const NAME_BY_CODE = Object.fromEntries(COUNTRIES.map((c) => [c.code, c]));
+const KNOWN_CODES = new Set(COUNTRIES.map((c) => c.code));
 
 function useFormatters(lang) {
   return {
@@ -20,14 +22,14 @@ function useFormatters(lang) {
       const d = new Date(iso);
       return `${d.getDate()} ${MONTHS[lang][d.getMonth()]}`;
     },
-    country: (v) => NAME_BY_CODE[v.countryCode]?.[lang].name || v.country,
+    country: (v) => (KNOWN_CODES.has(v.countryCode) ? countryName(v.countryCode, lang) : v.country),
   };
 }
 
-function VacancyCard({ v, delay, t, fmt }) {
+function VacancyCard({ v, delay, t, fmt, lp }) {
   const country = fmt.country(v);
   const label = country ? `${v.title} (${country})` : v.title;
-  const applyTo = `/jobseekers?vacancy=${encodeURIComponent(label)}#apply`;
+  const applyTo = lp(`/jobseekers?vacancy=${encodeURIComponent(label)}#apply`);
   const facts = [
     v.location && [t.location, v.location],
     v.start && [t.start, v.start],
@@ -81,6 +83,7 @@ export default function Vacancies({ limit = 6, eyebrow, title, moreLink, id, cou
   const { lang } = useLang();
   const t = useT(common).vacancies;
   const fmt = useFormatters(lang);
+  const lp = useLocalePath();
   const { loading, items, url, error } = useFeed("vacancies", "vacancies");
   const vacancies = countryCode ? items.filter((v) => v.countryCode === countryCode) : items;
 
@@ -110,7 +113,7 @@ export default function Vacancies({ limit = 6, eyebrow, title, moreLink, id, cou
       ) : vacancies.length ? (
         <div className="vacancy-grid">
           {vacancies.slice(0, limit).map((v, i) => (
-            <VacancyCard v={v} t={t} fmt={fmt} delay={i * 70} key={v.id} />
+            <VacancyCard v={v} t={t} fmt={fmt} lp={lp} delay={i * 70} key={v.id} />
           ))}
         </div>
       ) : (

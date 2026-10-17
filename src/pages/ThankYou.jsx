@@ -1,10 +1,11 @@
 import { Link } from "react-router-dom";
 import { SITE } from "../site";
-import { useT } from "../i18n/lang";
+import { useT, useLocalePath } from "../i18n/lang";
 import { common } from "../content/common";
 
 export default function ThankYou() {
   const t = useT(common).thanks;
+  const lp = useLocalePath();
   return (
     <section className="simple-page">
       <div>
@@ -14,7 +15,7 @@ export default function ThankYou() {
           {t.text}{" "}
           <a href={SITE.phoneHref} style={{ color: "#fff", fontWeight: 600 }}>{SITE.phone}</a>.
         </p>
-        <Link to="/" className="btn btn-primary">{t.back}</Link>
+        <Link to={lp("/")} className="btn btn-primary">{t.back}</Link>
       </div>
     </section>
   );

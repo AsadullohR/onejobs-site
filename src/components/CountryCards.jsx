@@ -1,13 +1,15 @@
 import { Link } from "react-router-dom";
 import { Reveal } from "./ui";
-import { useLang } from "../i18n/lang";
-import { COUNTRIES, countryUi } from "../content/countries";
+import Flag from "./Flag";
+import { useLang, useLocalePath, pick } from "../i18n/lang";
+import { COUNTRIES, countryUi, countryText } from "../content/countries";
 
 // The five destination countries; each card opens that country's page.
 export default function CountryCards({ id, className = "bg-soft", exclude, headingLevel = 2 }) {
   const Heading = `h${headingLevel}`;
   const { lang } = useLang();
-  const ui = countryUi[lang];
+  const lp = useLocalePath();
+  const ui = pick(countryUi, lang);
   const list = COUNTRIES.filter((c) => c.slug !== exclude);
 
   return (
@@ -20,14 +22,14 @@ export default function CountryCards({ id, className = "bg-soft", exclude, headi
       </Reveal>
       <div className={`countries-grid count-${list.length}`}>
         {list.map((country, i) => {
-          const t = country[lang];
+          const t = countryText(country, lang);
           return (
             <Reveal className="country-card" delay={i * 70} key={country.slug}>
-              <Link to={`/countries/${country.slug}`} className="country-link" aria-label={`${t.name}: ${ui.readMore}`}>
+              <Link to={lp(`/countries/${country.slug}`)} className="country-link" aria-label={`${t.name}: ${ui.readMore}`}>
                 <img src={country.photo} alt={t.name} loading="lazy" />
                 <div className="country-body">
                   <div className="country-top">
-                    <span className="country-tag">{country.flag} {t.name.toUpperCase()}</span>
+                    <span className="country-tag"><Flag code={country.code} /> {t.name.toUpperCase()}</span>
                     <span className="country-badge">{t.badge}</span>
                   </div>
                   <div>
