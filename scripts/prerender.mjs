@@ -98,6 +98,18 @@ for (const page of pages) {
   }
 }
 
+// The bare domain serves the English homepage itself (canonical /en/) instead of redirecting, so
+// Google can verify and crawl it. Visitors with another browser language are still redirected by
+// public/_redirects; the app moves everyone else to /<lang>/ once it loads. This file is also the
+// fallback for unknown paths, which the app redirects to the right language.
+const homePage = pages.find((p) => p.key === "home");
+fs.writeFileSync(
+  path.join(dist, "index.html"),
+  template
+    .replace(/<!--seo:start-->[\s\S]*<!--seo:end-->/, head(homePage, "en").trimStart())
+    .replace('<div id="root"></div>', `<div id="root">${render("/en")}</div>`)
+);
+
 // Sitemap: translated pages only, each with its language alternates.
 const urls = pages.flatMap((page) =>
   page.langs.map(
