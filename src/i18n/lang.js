@@ -49,12 +49,16 @@ export function splitLangPath(pathname) {
   return { lang: null, rest: pathname || "/" };
 }
 
-// Prefix an app path with a language: ("/", "bg") -> "/bg", ("/#contact", "bg") -> "/bg#contact".
+// Prefix an app path with a language, ending the path in "/" because pre-rendered pages are
+// served as folders (Netlify redirects /bg to /bg/):
+// ("/", "bg") -> "/bg/", ("/employers#request", "bg") -> "/bg/employers/#request".
 export function withLang(path, lang) {
   if (!path.startsWith("/")) return path;
-  if (path === "/") return `/${lang}`;
-  if (path.startsWith("/#") || path.startsWith("/?")) return `/${lang}${path.slice(1)}`;
-  return `/${lang}${path}`;
+  const cut = path.search(/[?#]/);
+  const pathname = cut === -1 ? path : path.slice(0, cut);
+  const tail = cut === -1 ? "" : path.slice(cut);
+  const slashed = pathname.endsWith("/") ? pathname : `${pathname}/`;
+  return `/${lang}${slashed === "/" ? "/" : slashed}${tail}`;
 }
 
 export const LangContext = createContext({ lang: FALLBACK });

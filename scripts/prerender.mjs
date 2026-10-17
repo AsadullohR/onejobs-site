@@ -23,7 +23,8 @@ const ogLocale = { en: "en_GB", bg: "bg_BG", me: "sr_ME", ru: "ru_RU", uz: "uz_U
 // hreflang uses ISO 639-1 language (+ region) codes, which is what Google reads.
 const hreflang = { en: "en", bg: "bg", me: "sr-ME", ru: "ru", uz: "uz" };
 const esc = (s) => String(s).replace(/&/g, "&amp;").replace(/"/g, "&quot;").replace(/</g, "&lt;").replace(/>/g, "&gt;");
-const url = (lang, p) => `${SITE_URL}/${lang}${p ? `/${p}` : ""}`;
+// Trailing slash: Netlify serves pre-rendered pages as folders and redirects /bg to /bg/.
+const url = (lang, p) => `${SITE_URL}/${lang}/${p ? `${p}/` : ""}`;
 
 const pages = [
   { key: "home", path: "", langs: EMPLOYER_LANGS },

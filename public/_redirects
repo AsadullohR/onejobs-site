@@ -1,10 +1,10 @@
 # The bare domain goes to the visitor's language. The nf_lang cookie (set by the site's
 # language switch) takes priority over the browser's Accept-Language header.
-/  /bg  302!  Language=bg
-/  /me  302!  Language=me,cnr,sr,hr,bs
-/  /ru  302!  Language=ru
-/  /uz  302!  Language=uz
-/  /en  302!
+/  /bg/  302!  Language=bg
+/  /me/  302!  Language=me,cnr,sr,hr,bs
+/  /ru/  302!  Language=ru
+/  /uz/  302!  Language=uz
+/  /en/  302!
 
 # Everything else: pre-rendered pages are served as files; anything else falls back to the app,
 # which redirects old links without a language (e.g. /jobseekers) to the visitor's language.
