@@ -4,6 +4,7 @@ import SuccessStories from "../components/SuccessStories";
 import RequestForm from "../components/RequestForm";
 import Flag from "../components/Flag";
 import EmployerQuote from "../components/EmployerQuote";
+import LegalDocs from "../components/LegalDocs";
 import { useSeo } from "../components/useSeo";
 import { useLang, useT, useLocalePath } from "../i18n/lang";
 import { home } from "../content/home";
@@ -130,6 +131,8 @@ export default function Home() {
       <EmployerQuote />
 
       <SuccessStories className="bg-white" />
+
+      <LegalDocs />
 
       <RequestForm eyebrow={t.formEyebrow} title={t.formTitle} text={t.formText} />
 
