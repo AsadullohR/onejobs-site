@@ -9,6 +9,7 @@ export const legal = {
     regTitle: "State registration certificate",
     company: "Company", tin: "Tax ID (TIN)", registered: "Registered", address: "Address",
     view: "View PDF (original + English) ↗",
+    bar: "Licensed private employment agency", barNo: "Licence No.", barIssuer: "Migration Agency under the Cabinet of Ministers of Uzbekistan", barLink: "View licence (PDF) ↗",
     footerLink: "Licence and registration",
   },
   bg: {
@@ -20,6 +21,7 @@ export const legal = {
     regTitle: "Удостоверение за държавна регистрация",
     company: "Фирма", tin: "Данъчен номер (TIN)", registered: "Регистрирана", address: "Адрес",
     view: "Вижте PDF (оригинал + английски) ↗",
+    bar: "Лицензирана частна агенция по заетостта", barNo: "Лиценз №", barIssuer: "Агенция по миграция към Министерския съвет на Узбекистан", barLink: "Вижте лиценза (PDF) ↗",
     footerLink: "Лиценз и регистрация",
   },
   me: {
@@ -31,6 +33,7 @@ export const legal = {
     regTitle: "Rješenje o državnoj registraciji",
     company: "Kompanija", tin: "PIB (TIN)", registered: "Registrovana", address: "Adresa",
     view: "Pogledajte PDF (original + engleski) ↗",
+    bar: "Licencirana privatna agencija za zapošljavanje", barNo: "Licenca br.", barIssuer: "Agencija za migracije pri Kabinetu ministara Uzbekistana", barLink: "Pogledajte licencu (PDF) ↗",
     footerLink: "Licenca i registracija",
   },
   ru: {
@@ -42,6 +45,7 @@ export const legal = {
     regTitle: "Свидетельство о государственной регистрации",
     company: "Компания", tin: "ИНН (СТИР)", registered: "Зарегистрирована", address: "Адрес",
     view: "Открыть PDF (оригинал + английский) ↗",
+    bar: "Лицензированное частное агентство занятости", barNo: "Лицензия №", barIssuer: "Агентство миграции при Кабинете Министров Республики Узбекистан", barLink: "Открыть лицензию (PDF) ↗",
     footerLink: "Лицензия и регистрация",
   },
   uz: {
@@ -53,6 +57,7 @@ export const legal = {
     regTitle: "Davlat roʻyxatidan oʻtganlik toʻgʻrisida guvohnoma",
     company: "Kompaniya", tin: "STIR", registered: "Roʻyxatdan oʻtgan", address: "Manzil",
     view: "PDFni ochish (asl nusxa + inglizcha) ↗",
+    bar: "Litsenziyaga ega xususiy bandlik agentligi", barNo: "Litsenziya №", barIssuer: "Vazirlar Mahkamasi huzuridagi Migratsiya agentligi", barLink: "Litsenziyani ochish (PDF) ↗",
     footerLink: "Litsenziya va guvohnoma",
   },
 };

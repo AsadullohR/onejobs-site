@@ -512,6 +512,10 @@ textarea.input { resize: vertical; }
 .btn-navy:hover { background: var(--navy-2); }
 
 /* ---------- Footer ---------- */
+.licence-bar { display: flex; flex-wrap: wrap; align-items: center; justify-content: center; gap: 0.4rem 1rem; padding: 1rem var(--gutter); background: var(--blue-tint); border-top: 1px solid var(--line); color: var(--ink-2); font-size: 0.88rem; text-align: center; }
+.licence-bar strong { color: var(--navy); }
+.licence-bar a { color: var(--blue); font-weight: 600; white-space: nowrap; }
+.licence-bar a:hover { text-decoration: underline; }
 .footer { background: var(--navy-deep); padding: 4rem var(--gutter) 2rem; color: rgba(255, 255, 255, 0.55); }
 .footer-grid { display: grid; grid-template-columns: 1.3fr 1fr 1fr 1fr 1.3fr; gap: 2.5rem; margin-bottom: 3rem; }
 .footer-logo { height: 64px; width: auto; margin-bottom: 1rem; filter: brightness(0) invert(1); }
