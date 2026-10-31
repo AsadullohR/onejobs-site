@@ -7,6 +7,7 @@ import { LANGS, useLang, useT, useLocalePath, saveLang, splitLangPath, withLang 
 import { common } from "../content/common";
 import { COUNTRIES, countryText } from "../content/countries";
 import { FACTS } from "../content/facts";
+import { legal } from "../content/legal";
 
 // Scroll to the #hash target after navigation, or to the top on a new page.
 function useScrollOnNavigate() {
@@ -114,59 +115,77 @@ function Nav() {
   );
 }
 
+// Licence strip shown above the footer on every page, linking straight to the licence PDF.
+function LicenceBar() {
+  const t = useT(legal);
+  if (!FACTS.licence) return null;
+  return (
+    <div className="licence-bar">
+      <span className="licence-bar-icon" aria-hidden>🛡️</span>
+      <span>
+        <strong>{t.bar}</strong> · {t.barNo} {FACTS.licence} · {t.barIssuer}
+      </span>
+      <a href={`/documents/onejobs-licence-${FACTS.licence}.pdf`} target="_blank" rel="noopener">{t.barLink}</a>
+    </div>
+  );
+}
+
 function Footer() {
   const { lang } = useLang();
   const lp = useLocalePath();
   const c = useT(common);
   const f = c.footer;
   return (
-    <footer className="footer">
-      <div className="footer-grid">
-        <div>
-          <img src={logo} alt={SITE.name} className="footer-logo" />
-          <p className="footer-blurb">{f.blurb}</p>
+    <>
+      <LicenceBar />
+      <footer className="footer">
+        <div className="footer-grid">
+          <div>
+            <img src={logo} alt={SITE.name} className="footer-logo" />
+            <p className="footer-blurb">{f.blurb}</p>
+          </div>
+          <div>
+            <div className="footer-title">{f.company}</div>
+            <ul className="footer-links">
+              <li><Link to={lp("/employers")}>{c.nav.employers}</Link></li>
+              <li><Link to={lp("/agencies")}>{c.nav.agencies}</Link></li>
+              <li><Link to={lp("/jobseekers")}>{c.nav.jobseekers}</Link></li>
+              <li><Link to={lp("/jobseekers#faq")}>{f.faq}</Link></li>
+            </ul>
+          </div>
+          <div>
+            <div className="footer-title">{f.services}</div>
+            <ul className="footer-links">
+              {f.serviceLinks.map((s, i) => (
+                <li key={s}><Link to={`${lp("/")}?sector=${i}#request`}>{s}</Link></li>
+              ))}
+            </ul>
+          </div>
+          <div>
+            <div className="footer-title">{f.countries}</div>
+            <ul className="footer-links">
+              {COUNTRIES.map((co) => (
+                <li key={co.slug}><Link to={lp(`/countries/${co.slug}`)}><Flag code={co.code} /> {countryText(co, lang).name}</Link></li>
+              ))}
+            </ul>
+          </div>
+          <div>
+            <div className="footer-title">{f.contact}</div>
+            <ul className="footer-links">
+              <li><span>{f.address}</span></li>
+              <li><a href={`mailto:${SITE.email}`}>{SITE.email}</a></li>
+              <li><a href={SITE.phoneHref}>{SITE.phone}</a></li>
+              <li><span>{f.hours}</span></li>
+              {FACTS.licence && <li><Link to={lp("/#documents")}>{f.licence} {FACTS.licence}</Link></li>}
+            </ul>
+          </div>
         </div>
-        <div>
-          <div className="footer-title">{f.company}</div>
-          <ul className="footer-links">
-            <li><Link to={lp("/employers")}>{c.nav.employers}</Link></li>
-            <li><Link to={lp("/agencies")}>{c.nav.agencies}</Link></li>
-            <li><Link to={lp("/jobseekers")}>{c.nav.jobseekers}</Link></li>
-            <li><Link to={lp("/jobseekers#faq")}>{f.faq}</Link></li>
-          </ul>
+        <div className="footer-bottom">
+          <span>© {new Date().getFullYear()} {SITE.name}. {f.rights}</span>
+          <Link to={lp("/#request")} style={{ color: "rgba(255,255,255,0.4)" }}>{f.consult}</Link>
         </div>
-        <div>
-          <div className="footer-title">{f.services}</div>
-          <ul className="footer-links">
-            {f.serviceLinks.map((s, i) => (
-              <li key={s}><Link to={`${lp("/")}?sector=${i}#request`}>{s}</Link></li>
-            ))}
-          </ul>
-        </div>
-        <div>
-          <div className="footer-title">{f.countries}</div>
-          <ul className="footer-links">
-            {COUNTRIES.map((co) => (
-              <li key={co.slug}><Link to={lp(`/countries/${co.slug}`)}><Flag code={co.code} /> {countryText(co, lang).name}</Link></li>
-            ))}
-          </ul>
-        </div>
-        <div>
-          <div className="footer-title">{f.contact}</div>
-          <ul className="footer-links">
-            <li><span>{f.address}</span></li>
-            <li><a href={`mailto:${SITE.email}`}>{SITE.email}</a></li>
-            <li><a href={SITE.phoneHref}>{SITE.phone}</a></li>
-            <li><span>{f.hours}</span></li>
-            {FACTS.licence && <li><Link to={lp("/#documents")}>{f.licence} {FACTS.licence}</Link></li>}
-          </ul>
-        </div>
-      </div>
-      <div className="footer-bottom">
-        <span>© {new Date().getFullYear()} {SITE.name}. {f.rights}</span>
-        <Link to={lp("/#request")} style={{ color: "rgba(255,255,255,0.4)" }}>{f.consult}</Link>
-      </div>
-    </footer>
+      </footer>
+    </>
   );
 }
 
