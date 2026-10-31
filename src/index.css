@@ -660,6 +660,24 @@ textarea.input { resize: vertical; }
 .eq-who { display: flex; flex-direction: column; gap: 2px; font-size: 0.9rem; color: var(--muted); }
 .eq-who strong { color: var(--navy); }
 
+/* Licence and registration documents */
+.legal-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(min(100%, 460px), 1fr)); gap: 1.5rem; max-width: 1040px; margin: 0 auto; }
+.legal-card { display: flex; gap: 1.5rem; background: #fff; border: 1.5px solid var(--line); border-radius: 14px; padding: 1.5rem; }
+.legal-thumb { flex: none; width: 140px; align-self: flex-start; border-radius: 6px; overflow: hidden; border: 1px solid var(--line); box-shadow: 0 6px 18px rgba(13, 27, 62, 0.1); transition: transform 0.2s; }
+.legal-thumb:hover { transform: translateY(-3px); }
+.legal-thumb img { display: block; width: 100%; height: auto; }
+.legal-body { min-width: 0; display: flex; flex-direction: column; }
+.legal-body h3 { font-weight: 700; font-size: 1.05rem; margin-bottom: 0.9rem; }
+.legal-body dl { display: grid; gap: 0.55rem; font-size: 0.88rem; margin-bottom: 1.1rem; }
+.legal-body dt { color: var(--muted); font-size: 0.78rem; }
+.legal-body dd { color: var(--navy); font-weight: 600; overflow-wrap: anywhere; }
+.legal-link { margin-top: auto; color: var(--blue); font-weight: 600; font-size: 0.9rem; }
+.legal-link:hover { text-decoration: underline; }
+@media (max-width: 560px) {
+  .legal-card { flex-direction: column; }
+  .legal-thumb { width: 120px; }
+}
+
 .form-privacy { font-size: 0.75rem; color: var(--muted); text-align: center; }
 
 .seekers-band { display: flex; justify-content: center; align-items: center; flex-wrap: wrap; gap: 0.5rem 1rem; padding: 1.25rem var(--gutter); background: var(--blue-tint); font-size: 0.92rem; color: var(--navy); }

@@ -6,8 +6,18 @@ export const FACTS = {
   countries: ["BG", "ME", "DE", "TR", "HR"],
   shortlistDays: "7–14",
 
-  // Uzbekistan licence number for private employment agencies (digits only). Empty = not shown.
-  licence: "1479485",
+  // From the licence issued by the Migration Agency under the Cabinet of Ministers of Uzbekistan
+  // (public/documents/onejobs-licence-1919952.pdf). Empty = not shown.
+  licence: "1919952",
+  licenceRegistry: "L-2561501325451",
+  licenceFrom: "2026-10-19", // valid indefinitely
+
+  // From the state registration certificate (public/documents/onejobs-registration-certificate.pdf).
+  legalName: "\"ONE JOBS XUSUSIY BANDLIK AGENTLIGI\" LLC",
+  tin: "313 355 800",
+  registered: "2026-09-22",
+  street: "1/B Milliy Tiklanish St., Mustaqillik MFY",
+  city: "Andijan",
 
   // A real employer quote. null = section hidden.
   // { text: { en: "…", bg: "…", me: "…", ru: "…", uz: "…" }, name: "Full name", role: "Title", company: "Company", country: "BG" }

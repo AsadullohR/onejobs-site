@@ -158,7 +158,7 @@ function Footer() {
             <li><a href={`mailto:${SITE.email}`}>{SITE.email}</a></li>
             <li><a href={SITE.phoneHref}>{SITE.phone}</a></li>
             <li><span>{f.hours}</span></li>
-            {FACTS.licence && <li><span>{f.licence} {FACTS.licence}</span></li>}
+            {FACTS.licence && <li><Link to={lp("/#documents")}>{f.licence} {FACTS.licence}</Link></li>}
           </ul>
         </div>
       </div>

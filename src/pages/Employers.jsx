@@ -1,6 +1,7 @@
 import { Reveal, SectionHead, HeroStats, FeatureGrid } from "../components/ui";
 import RequestForm from "../components/RequestForm";
 import EmployerQuote from "../components/EmployerQuote";
+import LegalDocs from "../components/LegalDocs";
 import { useSeo } from "../components/useSeo";
 import { SITE } from "../site";
 import { useT } from "../i18n/lang";
@@ -79,6 +80,8 @@ export default function Employers() {
       </section>
 
       <EmployerQuote />
+
+      <LegalDocs />
 
       <RequestForm eyebrow={t.hireEyebrow} title={t.hireTitle} text={t.hireText} />
     </div>
